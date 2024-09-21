@@ -3,25 +3,35 @@ import { IAnswer } from "../interfaces/IQuestions";
 type OptionsPropsType = {
   answerOptions: IAnswer;
   dispatch: any;
-  answerIndex: number;
+  correctAnswer: number;
   answer: number | null;
 }
 
 
-export default function Options({ answerOptions, dispatch, answerIndex, answer }: OptionsPropsType) {
+export default function Options({ answerOptions, dispatch, correctAnswer, answer }: OptionsPropsType) {
+  
   return Object.values(answerOptions).filter((answerOption: string | null) => answerOption !== null)
-    .map((answerOption, index) => {
-      const styleChosenAnswer = answer === index ? "answer" : "";
-      const styleOption = answerIndex === index ? "correct" : "wrong";
+  .map((answerOption, index) => {
+      
       const isDisabled = answer !== null;
+      const styleOption = index !== answer && "opacity-20";
+      const applyStyleTranslate = index == answer && "translate-x-6"
+      const applyStyleWrongCorrectColor = index == correctAnswer ? "badge-success" : "badge-error";
+      const hoverTranslate = 'hover:translate-x-6'
+
       return (
         <div key={answerOption} >
           <button
-            className={`btn btn-option ${styleChosenAnswer} ${isDisabled && styleOption}`}
+            className={`badge badge-neutral text-lg p-4 md:text-2xl w-full 
+               justify-start h-full
+               ${applyStyleTranslate && applyStyleWrongCorrectColor}
+               ${!isDisabled && hoverTranslate}
+               ${isDisabled && styleOption}
+               ${isDisabled && applyStyleTranslate}`}
             onClick={() => dispatch({ type: "answer", payload: index })}
             disabled={isDisabled}
           >
-            {answerOption && answerOption}
+            {answerOption}
           </button>
         </div>
       );

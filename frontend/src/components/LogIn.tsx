@@ -2,7 +2,7 @@ import React from "react";
 import GoogleSignInButton from "./GoogleSignInButton";
 import LinkdinSignInButton from "./LinkdinSignInButton";
 
-const SignIn: React.FC = () => {
+const Login: React.FC = () => {
 
   return (
     <>
@@ -12,4 +12,4 @@ const SignIn: React.FC = () => {
   )
 }
 
-export default SignIn
+export default Login

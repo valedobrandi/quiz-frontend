@@ -1,10 +1,9 @@
 type FinishPropsType = {
   points: number;
   totalPoints: number;
-  highScore: number;
 }
 
-export default function Finished({ points, totalPoints, highScore }: FinishPropsType) {
+export default function Finished({ points, totalPoints }: FinishPropsType) {
   const totalPercentage = (points * 100) / totalPoints;
   return (
     <>
@@ -12,7 +11,6 @@ export default function Finished({ points, totalPoints, highScore }: FinishProps
         You scored <strong>{points}</strong> out of {totalPoints} (
         {Math.ceil(totalPercentage)}%)
       </p>
-      <p className="highscore">(HighScore: {highScore} points)</p>
     </>
   );
 }
