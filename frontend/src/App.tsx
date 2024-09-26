@@ -1,12 +1,22 @@
 import { Route, Routes } from "react-router-dom"
-import TheQuiz from "./pages/theQuiz"
+import Main from "./pages/main"
 import React from "react"
+import Quiz from "./pages/quiz"
+import Header from "./components/Header"
+import Finish from "./pages/finish"
+import SignIn from "./components/SingIn"
 
 const App: React.FC = () => {
   return (
-    <Routes>
-      <Route path='/' element={<TheQuiz />} />
-    </Routes>
+    <div className="max-w-[64rem] m-auto">
+      <Header />
+      <Routes>
+        <Route path='/' element={<Main />} />
+        <Route path='/quiz' element={<Quiz />} />
+        <Route path='/finish' element={<Finish />} />
+        <Route path='/singIn' element={<SignIn />} />
+      </Routes>
+    </div>
   )
 }
 

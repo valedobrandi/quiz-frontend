@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-import daisyui from "daisyui"
+import daisyui from "daisyui";
+import tailwindcss_animated from "tailwindcss-animated"
 
 export default {
   content: [
@@ -12,7 +13,7 @@ export default {
       Nunito: ['Nunito', 'Arial', 'sans-serif']
     }
   },
-  plugins: [daisyui],
+  plugins: [daisyui, tailwindcss_animated],
   daisyui: {
     themes: ["dark"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "dark", // name of one of the included themes for dark mode

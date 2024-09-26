@@ -8,5 +8,5 @@ export const initialState: IInitialState = {
   points: 0,
   highScore: 0,
   seconds: 20 * 30,
-
+  show_hide: false,
 };

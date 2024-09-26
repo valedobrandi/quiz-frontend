@@ -8,7 +8,7 @@ const GoogleSignInButton: React.FC = () => {
 
   return (
     <button
-      className=" border-slate-300 bg-white  text-black btn btn-primary btn-sm ml-2"
+      className=" border-slate-300 bg-white  text-black btn btn-primary btn-sm"
       onClick={() => authGoogle()}>
       <img className='w-6' src={Google_SVG} alt="company logo" />
       Sign in with Google
