@@ -7,12 +7,12 @@ type CategoriesType = {
 };
 
 const categories = [
-  { name: "Linux", points: 20, percentage: 0 },
+  { name: "Linux", points: 40, percentage: 0 },
   { name: "DevOps", points: 5, percentage: 0 },
-  { name: "Networking", points: 45, percentage: 0 },
-  { name: "Programming", points: 50, percentage: 0 },
+  { name: "Networking", points: 10, percentage: 0 },
+  { name: "Programming", points: 75, percentage: 0 },
   { name: "Cloud", points: 5, percentage: 0 },
-  { name: "Docker", points: 50, percentage: 0 },
+  { name: "Docker", points: 15, percentage: 0 },
   { name: "Kubernetes", points: 50, percentage: 0 },
 ];
 
@@ -25,10 +25,22 @@ function useCategory() {
   };
 
   const calculatePercentages = () => {
-    const calculatePercentage = categoryList.map((category) => ({
+    const calculatePercentage = categoryList.map((category) => {
+      let percentage = Math.ceil((category.points / calculateTotalPoints()) * 100)
+      if (percentage > 30)
+        percentage = 30
+
+    return (  {
       ...category,
-      percentage: Math.ceil((category.points / calculateTotalPoints()) * 100),
-    }));
+      percentage: 
+
+      Math.ceil((category.points / calculateTotalPoints()) * 100),
+    })
+  
+  });
+
+
+
     setCategoryList(calculatePercentage);
   };
 

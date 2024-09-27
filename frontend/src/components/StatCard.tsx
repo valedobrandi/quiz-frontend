@@ -9,6 +9,11 @@ interface StatCardProps {
   percentage: number;
 }
 
+const backgroundColor = [
+  'css-points-container-background-color',
+  'css-points-container-background-color'
+]
+
 const StatCard: React.FC<StatCardProps> = ({
   title,
   icon,
@@ -17,25 +22,28 @@ const StatCard: React.FC<StatCardProps> = ({
   percentage,
   description,
 }) => {
-  const [{width, height}, serSffsetWidth] = useState(
-    { width: 150 + percentage, height: 150 + percentage });
-
+  const [offSet, setOffset] = useState(
+    { width: `${percentage.toString()}`, height: `${percentage.toString()}` });
+    console.log(percentage);
+    
+    
    return (
     <div
-      className={`p-4 h-fit bg-base-300 rounded-2xl flex flex-col 
-    bg-gradient-to-r from-cyan-500 to-blue-500 text-white 
-    h-[${height}px] w-[${width}px]
-    
-    `}
+      className={`bg-base-300 rounded-full m-auto flex justify-center item-center 
+        flex-col bg-gradient-to-r from-cyan-500 to-blue-500 
+        text-white h-[${percentage.toString()}rem] w-[${percentage.toString()}rem]`}
     >
-      <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
-        <div className="inline text-lg mr-2">{icon}</div>
+      <span className="stat-title font-semibold uppercase 
+      whitespace-normal leading-3 text-sm opacity-100 
+      text-center text-gray-100">
+        <div className="inline text-lg mr-2 text-center">{icon}</div>
         {title}
       </span>
-      <span className="stat-value overflow-hidden">
+      <span className="stat-value overflow-hidden text-center">
         {value} <span className="unit">{unit}</span>
       </span>
-      <span className="stat-desc whitespace-normal opacity-100 text-gray-200">
+      <span className="stat-desc whitespace-normal 
+      text-center opacity-100 text-gray-200">
         {description}
       </span>
     </div>

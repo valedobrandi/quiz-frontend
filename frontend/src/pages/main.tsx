@@ -98,7 +98,7 @@ const Main: React.FC = () => {
             Discover how habits compound over 1 year, or 10 years to be motivated to start!" 
             buttonText="build my kwloag grid" 
             />
-            <div className="flex h-fit gap-2 flex-wrap">
+            <div className="flex h-fit gap-1 flex-wrap">
             {categoryList.map((category, index) => {
               return (
               <StatCard
