@@ -1,33 +1,52 @@
 import StatCard from "../components/StatCard";
+import useCategory from "../customHooks/useCategory";
+import Ranking from "../components/Ranking";
+import { useState } from "react";
+import ToggleView from "../components/ToggleView";
+import PerformanceOverview from "../components/PerformanceOverview";
 
 function Finish() {
+  const { categoryList } = useCategory();
+  const [toggleView, setToggleView] = useState(true);
   return (
-    <section className="flex flex-col md:flex-row gap-16">
-      <div className="space-y-6 lg:w-2/5">
-        <span
-          className="text-accent uppercase tracking-wide
-     font-bold text-md ms:text-base"
-        >
-          Visualize your success
-        </span>
-        <h2 className="text-3xl md:text-4xl font-extrabold mt-4">
-          Beat procastination
-        </h2>
-        <p className="text-base-content/90">
-        Visualize Habit suggests good habits to pick in 2024. Discover how
-        habits compound over 1 year, or 10 years to be motivated to start!
-      </p>
+    <>
+      <div className="my-36">
+        <PerformanceOverview />
       </div>
-      <div>
-      <StatCard
-        title="Read"
-        icon="📚"
-        value={18}
-        unit="books"
-        description="I'll read for 3 days, 19 hours"
-      />
-      </div>
-    </section>
+      <ToggleView toggleView={toggleView} setToggleView={setToggleView} />
+      <section className="flex justify-center mt-24 gap-24">
+        {toggleView ? (
+          <div>
+            <h2 className="md:text-2xl font-semibold text-left mb-12">
+              Leaderboard Standings
+            </h2>
+            <Ranking />
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center w-[50%] h-[50%]">
+            <h2 className="md:2text-lg font-medium text-center mb-12">
+              Quiz Mastery by Category
+            </h2>
+            <div className="flex flex-wrap">
+              {categoryList.map((category, index) => {
+                return (
+                  <StatCard
+                    index={index}
+                    percentage={category.percentage}
+                    key={index}
+                    description=""
+                    icon=""
+                    title="PIC"
+                    unit=""
+                    value={category.points}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </section>
+    </>
   );
 }
 

@@ -25,12 +25,13 @@ const StatCard: React.FC<StatCardProps> = ({
   index
 }) => {
   const getBackgroundColor = index % 2 === 0 ? backgroundColor[0] : backgroundColor[1];
-
+  const windowWidth = window.innerWidth;
+  const styledSize = windowWidth < 400 ? `${percentage}rem` : `${percentage}rem`;
   return (
     <div
       className={`${getBackgroundColor} rounded-full m-auto flex justify-center item-center 
         flex-col text-white`}
-      style={{ width: `${percentage}rem`, height: `${percentage}rem` }}
+      style={{ width: `${styledSize}`, height: `${styledSize}` }}
     >
       <span
         className="stat-title font-semibold uppercase 

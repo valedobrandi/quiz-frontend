@@ -1,9 +1,9 @@
 import StatCard from "../components/StatCard";
 import SideBoard from "../components/SideBoard";
-import useCategory from "../customHooks/useCategory";
+import SideCard from "../components/SideCard";
+import { MainPageCategories } from "../files/MainPageCategories";
 
 const Main: React.FC = () => {
-  const { categoryList } = useCategory();
 
   return (
     <>
@@ -17,55 +17,19 @@ const Main: React.FC = () => {
           />
           <div className="w-full md:w-[30rem] group">
             <div className="grid grid-cols-1 gap-16">
-              <div
-                className="relative p-4 flex flex-col items-center justify-center 
-              css-ranking-container-background-color rounded-2xl md:w-full w-[50%] m-auto"
-              >
-                <div className="absolute -top-10 -left-4">
-                  <div className="flex flex-row items-start justify-center space-x-2">
-                    <p className="text-sm"> Watch your Ranking...</p>
-                  </div>
-                </div>
-                <h3 className="flex items-center font-bold mb-2 text-lg">
-                  <img
-                    className="w-8 h-8 mr-2 animate-bounce animate-infinite animate-duration-[1000ms]"
-                    src="ranking-crown-svgrepo-com.svg"
-                    alt="crown picture"
-                  />
-                  <span className="text-white text-center">Ranking</span>
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className="p-3">
-                    <span className="coiny-regular text-6xl text-[#191d24]">
-                      1
-                    </span>
-                  </span>
-                </div>
-              </div>
+            <SideCard
+              style="css-ranking-container-background-color"
+              image="ranking-crown-svgrepo-com.svg"
+              text="Ranking"
+              title="What is your ranking ?"
+            />
             </div>
-            <div
-              className="relative p-4 flex flex-col justify-center items-center 
-            css-points-container-background-color rounded-2xl mt-20 md:w-full w-[50%] m-auto mb-8"
-            >
-              <div className="absolute -top-10 -right-6">
-                <div className="flex flex-row items-start justify-center space-x-2">
-                  <div className="flex flex-row items-start justify-center space-x-2">
-                    <p className="text-sm"> How many points ?</p>
-                  </div>
-                </div>
-              </div>
-              <h3 className="flex items-center font-bold mb-2 text-lg">
-                <img
-                  className="w-8 h-8 mr-2 animate-bounce animate-infinite animate-duration-[1000ms]"
-                  src="profits-statistics-svgrepo-com.svg"
-                  alt="statistics picture"
-                />
-                <span className="text-white">Points</span>
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="coiny-regular text-6xl text-[#191d24]">2</span>
-              </div>
-            </div>
+            <SideCard
+              style="css-points-container-background-color mt-16"
+              image="profits-statistics-svgrepo-com.svg"
+              text="Points"
+              title="How many points ?"
+            />
           </div>
         </section>
         <section className="">
@@ -85,8 +49,8 @@ const Main: React.FC = () => {
             Discover how habits compound over 1 year, or 10 years to be motivated to start!"
               buttonText="build my kwloag grid"
             />
-              <div className="flex h-fit gap-1 flex-wrap ml-4">
-                {categoryList.map((category, index) => {
+              <div className="flex h-fit gap-1 flex-wrap h-10">
+                {MainPageCategories.map((category, index) => {
                   return (
                     <StatCard
                       index={index}

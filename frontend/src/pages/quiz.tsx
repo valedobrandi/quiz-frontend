@@ -16,8 +16,8 @@ function Quiz() {
   useEffect(() => {
     const get = async () => {
       try {
-        const questions = await fetch('http://localhost:3001/quiz');
-        const data = await questions.json()
+        const questions = await fetch("http://localhost:3001/quiz");
+        const data = await questions.json();
 
         dispatch({ type: "success", payload: data });
       } catch (error) {
@@ -28,10 +28,10 @@ function Quiz() {
     get();
   }, []);
 
-  const isFinish = (index + 1) === questions.length;
+  const isFinish = index + 1 === questions.length;
 
   return (
-    <div>
+    <div className="mt-24">
       {isRender(status, "loading") && <Loader />}
       {isRender(status, "error") && <Error />}
       {isRender(status, "ready") && (
@@ -40,6 +40,7 @@ function Quiz() {
             {questions.length} Questions to test your knowledge !
           </h3>
           <Button
+            style="btn btn-active btn-lg md:text-lg"
             setClick={() => dispatch({ type: "start", payload: null })}
             title={"Let's start"}
           />
@@ -55,8 +56,11 @@ function Quiz() {
               totalPoints={highScore}
             />
             <div>
-              <h4 className="terminal-box text-xl mb-4">
-                {questions[index].question}{" "}
+              <h4
+                className="terminal-box badge badge-neutral text-lg p-4 md:text-2xl w-full 
+               justify-start h-full text-xl mb-4 text-center"
+              >
+                {questions[index].question}
               </h4>
             </div>
             <div className="options">
@@ -71,11 +75,12 @@ function Quiz() {
           <div className="flex justify-between">
             {/* <Timer dispatch={dispatch} seconds={seconds} /> */}
             <Button
+              style="btn btn-active btn-lg md:text-lg"
               isDisable={answer === null || isFinish}
               title={"Next"}
               setClick={() => {
                 dispatch({
-                  type:"nextQuestion",
+                  type: "nextQuestion",
                   payload: questions[index].correct_answers,
                 });
               }}
@@ -83,6 +88,7 @@ function Quiz() {
             {isFinish && (
               <Link to={"/finish"}>
                 <Button
+                  style="btn btn-active btn-lg md:text-lg"
                   isDisable={answer === null}
                   title={"Finish"}
                   setClick={() => {

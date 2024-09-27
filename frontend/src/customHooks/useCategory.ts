@@ -12,6 +12,10 @@ function useCategory() {
     { name: "DevOps", points: 7, percentage: 0 },
     { name: "Docker", points: 30, percentage: 0 },
     { name: "Cloud", points: 10, percentage: 0 },
+    { name: "Linux", points: 5, percentage: 0 },
+    { name: "DevOps", points: 7, percentage: 0 },
+    { name: "Docker", points: 30, percentage: 0 },
+    { name: "Cloud", points: 10, percentage: 0 },
   ]);
 
   useEffect(() => {
@@ -40,7 +44,8 @@ function useCategory() {
 
     
   };
-
+  console.log(categoryList);
+  
   console.log(categoryList);
 
   return { categoryList, setCategoryList };

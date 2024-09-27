@@ -1,8 +1,9 @@
 export default function Loader() {
     return (
-        <div className="loader-container">
+        <div className="text-center mt-60">
             <div className="loader"></div>
-            <p>Loading questions...</p>
+            <span className="loading loading-spinner text-success"></span>
+            <p className="md:text-2xl">Loading questions...</p>
         </div>
     );
 }

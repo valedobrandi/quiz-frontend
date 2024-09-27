@@ -3,8 +3,9 @@ import Main from "./pages/main"
 import React from "react"
 import Quiz from "./pages/quiz"
 import Header from "./components/Header"
-import Finish from "./pages/finish"
+
 import SignIn from "./components/SingIn"
+import Finish from "./pages/finish"
 
 const App: React.FC = () => {
   return (
