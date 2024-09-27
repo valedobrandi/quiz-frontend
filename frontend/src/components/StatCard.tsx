@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface StatCardProps {
   title: string;
@@ -7,12 +7,13 @@ interface StatCardProps {
   unit: string;
   description: string;
   percentage: number;
+  index: number;
 }
 
 const backgroundColor = [
-  'css-points-container-background-color',
-  'css-points-container-background-color'
-]
+  "css-points-container-background-color ml-1",
+  "css-ranking-container-background-color mr-1",
+];
 
 const StatCard: React.FC<StatCardProps> = ({
   title,
@@ -21,29 +22,31 @@ const StatCard: React.FC<StatCardProps> = ({
   unit,
   percentage,
   description,
+  index
 }) => {
-  const [offSet, setOffset] = useState(
-    { width: `${percentage.toString()}`, height: `${percentage.toString()}` });
-    console.log(percentage);
-    
-    
-   return (
+  const getBackgroundColor = index % 2 === 0 ? backgroundColor[0] : backgroundColor[1];
+
+  return (
     <div
-      className={`bg-base-300 rounded-full m-auto flex justify-center item-center 
-        flex-col bg-gradient-to-r from-cyan-500 to-blue-500 
-        text-white h-[${percentage.toString()}rem] w-[${percentage.toString()}rem]`}
+      className={`${getBackgroundColor} rounded-full m-auto flex justify-center item-center 
+        flex-col text-white`}
+      style={{ width: `${percentage}rem`, height: `${percentage}rem` }}
     >
-      <span className="stat-title font-semibold uppercase 
+      <span
+        className="stat-title font-semibold uppercase 
       whitespace-normal leading-3 text-sm opacity-100 
-      text-center text-gray-100">
+      text-center text-gray-100"
+      >
         <div className="inline text-lg mr-2 text-center">{icon}</div>
         {title}
       </span>
       <span className="stat-value overflow-hidden text-center">
         {value} <span className="unit">{unit}</span>
       </span>
-      <span className="stat-desc whitespace-normal 
-      text-center opacity-100 text-gray-200">
+      <span
+        className="stat-desc whitespace-normal 
+      text-center opacity-100 text-gray-200"
+      >
         {description}
       </span>
     </div>

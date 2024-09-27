@@ -10,7 +10,8 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      Nunito: ['Nunito', 'Arial', 'sans-serif']
+      Nunito: ['Nunito', 'Arial', 'sans-serif'],
+      Coiny: ['Coiny', 'Arial', 'sans-serif']
     }
   },
   plugins: [daisyui, tailwindcss_animated],

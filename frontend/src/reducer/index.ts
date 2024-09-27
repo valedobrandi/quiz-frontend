@@ -31,7 +31,7 @@ export default function reducer(
     case "nextQuestion": {
       const { answer } = state;
       let answerPoints = 0;
-      if (action.payload === answer) answerPoints = 5;
+      if (action.payload === answer) answerPoints = 1;
       return {
         ...state,
         index: state.index + 1,

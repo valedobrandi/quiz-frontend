@@ -51,7 +51,7 @@ export default function SignIn() {
         <input
           autoComplete="true"
           type="text"
-          className="input border rounded p-2 text-sm input-sm"
+          className="input input-bordered input-info bg-slate-100 rounded p-2 text-sm input-sm"
           placeholder="Username"
           name="username"
           value={username}
@@ -61,7 +61,7 @@ export default function SignIn() {
           <input
             autoComplete="true"
             type={showPassword ? "text" : "password"}
-            className="input border rounded p-2 text-sm input-sm w-full"
+            className="input input-bordered input-info bg-slate-100 rounded p-2 text-sm input-sm w-full"
             placeholder="Password"
             name="password"
             value={password}
