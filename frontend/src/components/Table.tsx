@@ -1,4 +1,4 @@
-export default function LeaderBoard() {
+export default function Table() {
     return (
         <footer className="bg-white border-8 border-black shadow-md 
         rounded-3xl overflow-hidden max-w-4xl ml-10">

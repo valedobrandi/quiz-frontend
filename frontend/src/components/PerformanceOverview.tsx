@@ -2,31 +2,28 @@ import { ScoreBadge } from "../components/ScoreBadge";
 
 const PerformanceOverview: React.FC = () => {
   return (
-    <section className="p-2">
-      <div className="flex flex-wrap items-center justify-space gap-8">
-        <h2 className="w-full text-2xl font-bold text-center text-blue-600 mb-4">
-          Your Performance Overview
-        </h2>
-        <div className="flex">
+    <div className="badge bg-[#242933] h-fit flex flex-wrap md:flex-nowrap
+    items-center gap-4 p-4 mx-1 md:m-0 md:flex-nowrap">
+      <h2 className="w-full text-xl font-Coiny text-center text-blue-600">
+        Your Performance Overview
+      </h2>
+      <div className="flex flex-wrap items-center justify-around gap-8">
+        <div className="flex gap-6">
           <ScoreBadge
-            style="badge badge-info gap-2 p-5"
+            style="badge badge-info gap-2 px-6 py-5"
             image="ranking-crown-svgrepo-com.svg"
             title="Ranking:"
             value="1"
           />
           <ScoreBadge
-            style="badge badge-success gap-2 p-5"
+            style="badge badge-success gap-2 px-6 py-5"
             image="profits-statistics-svgrepo-com.svg"
             title="Points:"
             value="1"
           />
         </div>
-        <p>
-          Check out how you performed in this quiz, from your top-ranking
-          position to the categories you’ve mastered
-        </p>
       </div>
-    </section>
+    </div>
   );
 };
 

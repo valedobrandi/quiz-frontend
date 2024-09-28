@@ -57,43 +57,45 @@ const people = [
 
 export default function Ranking() {
   return (
-    <ul role="list" className="divide-y divide-gray-100">
-      {people.map((person) => (
-        <li key={person.email} className="flex justify-between gap-x-6 py-5">
-          <div className="flex min-w-0 gap-x-4 m-auto">
-            <img
-              alt=""
-              src={person.imageUrl}
-              className="h-12 w-12 flex-none rounded-full bg-gray-50"
-            />
-            <div className="min-w-0 flex-auto">
-              <p className="text-sm md:text-2xl font-Nunito  leading-6 text-[#a6adba]">
-                {person.name}
-              </p>
+    <ul role="list" className="flex flex-col">
+      <div className="flex flex-wrap md:w-[50%] h-[50%] md:mx-auto">
+        {people.map((person, index) => (
+          <li
+            key={person.email}
+            className=" h-[6rem] w-full flex bg-[#1d232a] rounded-xl
+        justify-between items-center px-10 h-8 m-2 shrink-0"
+          >
+            <div className="flex relative justify-center 
+            items-center gap-8 gap-x-4 md:my-auto">
+              {index === 0 && (
+                <img
+                  src="ranking-crown-svgrepo-com.svg" // Substitua "crown-image-url" pela URL da imagem da coroa
+                  alt="Crown"
+                  className="absolute -top-5 -left-1 -rotate-[40deg] w-8 h-8"
+                />
+              )}
+              <img
+                alt=""
+                src={person.imageUrl}
+                className="h-12 w-12 flex-none rounded-full bg-gray-50"
+              />
+              <div className="min-w-0 flex-auto">
+                <p className="text-sm md:text-xl font-Nunito text-center leading-6 text-[#a6adba]">
+                  {person.name}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="shrink-0 flex flex-col items-end gap-6">
-            <ScoreBadge
-              style="badge badge-info p-5"
-              image="ranking-crown-svgrepo-com.svg"
-              title="Ranking:"
-              value="1"
-            />
-    
+            <div className="flex items-end gap-6">
               <ScoreBadge
-                style="badge badge-success gap-2 p-5"
+                style="badge badge-success gap-2"
                 image="profits-statistics-svgrepo-com.svg"
                 title="Points:"
                 value="1"
               />
-              <div>
-              <p className="mt-1 truncate text-xs md:text-xl leading-5 text-gray-500">
-                {person.email}
-              </p>
-              </div>
-          </div>
-        </li>
-      ))}
+            </div>
+          </li>
+        ))}
+      </div>
     </ul>
   );
 }
