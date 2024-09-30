@@ -53,7 +53,6 @@ h4 {
 }
 
 .terminal-box {
-  background-color: #1e1e1e;
   color: #00ff00;
   padding: 10px;
   border-radius: 5px;
@@ -83,7 +82,7 @@ h4 {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  margin-bottom: 3.2rem;
+  margin-bottom: 2rem;
 }
 
 .btn-option {

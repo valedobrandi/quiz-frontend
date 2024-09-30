@@ -13,21 +13,19 @@ const Main: React.FC = () => {
             title="Test Your Knowledge and Compete for the Crown"
             description="Discover how far you can go! Track your progress and
         learn."
-            buttonText="Let`s Go"
+            buttonText="Let`s Go!"
           />
           <div className="w-full md:w-[30rem] group">
             <div className="grid grid-cols-1 gap-16">
             <SideCard
-              style="css-ranking-container-background-color"
+              style="css-ranking-container-background-color "
               image="ranking-crown-svgrepo-com.svg"
-              text="Ranking"
               title="What is your ranking ?"
             />
             </div>
             <SideCard
               style="css-points-container-background-color mt-16"
               image="profits-statistics-svgrepo-com.svg"
-              text="Points"
               title="How many points ?"
             />
           </div>

@@ -37,6 +37,7 @@ export default function reducer(
         index: state.index + 1,
         answer: null,
         points: state.points + answerPoints,
+        seconds: 15,
       };
     }
     case "restartQuiz":
@@ -46,7 +47,7 @@ export default function reducer(
         answer: null,
         points: 0,
         status: "ready",
-        seconds: 10,
+        seconds: 15,
       };
     case "timeOut":
       return { ...state, answer: null, status: "finish" };

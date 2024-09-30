@@ -7,6 +7,6 @@ export const initialState: IInitialState = {
   answer: null,
   points: 0,
   highScore: 0,
-  seconds: 20 * 30,
+  seconds: 15,
   show_hide: false,
 };

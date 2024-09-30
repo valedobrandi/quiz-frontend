@@ -8,10 +8,13 @@ import Loader from "../components/Loader";
 import Error from "../components/Error";
 import { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
+import Timer from "../components/Timer";
 
 function Quiz() {
-  const [{ status, questions, index, answer, points, highScore }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { status, questions, index, answer, points, highScore, seconds },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const get = async () => {
@@ -57,7 +60,7 @@ function Quiz() {
             />
             <div>
               <h4
-                className="terminal-box badge badge-neutral text-lg p-4 md:text-2xl w-full 
+                className="terminal-box text-lg p-4 md:text-2xl w-full 
                justify-start h-full text-xl mb-4 text-center"
               >
                 {questions[index].question}
@@ -73,7 +76,7 @@ function Quiz() {
             </div>
           </div>
           <div className="flex justify-between">
-            {/* <Timer dispatch={dispatch} seconds={seconds} /> */}
+            <Timer dispatch={dispatch} seconds={seconds} />
             <Button
               style="btn btn-active btn-lg md:text-lg"
               isDisable={answer === null || isFinish}
@@ -104,10 +107,13 @@ function Quiz() {
         </div>
       )}
       {isRender(status, "finish") && (
-        <Button
-          title={"Restart quiz"}
-          setClick={() => dispatch({ type: "restartQuiz", payload: null })}
-        />
+        <div>
+          <Button
+            style="btn btn-active btn-lg md:text-lg"
+            title={"Restart quiz"}
+            setClick={() => dispatch({ type: "restartQuiz", payload: null })}
+          />
+        </div>
       )}
     </div>
   );

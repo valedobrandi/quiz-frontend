@@ -38,7 +38,7 @@ export default function Progress({
       <progress
         className="progress progress-primary
          bg-white md:h-5 h-3 w-full] mb-8 mt-4"
-        value={index}
+        value={index + 1}
         max={20}
       ></progress>
     </header>
