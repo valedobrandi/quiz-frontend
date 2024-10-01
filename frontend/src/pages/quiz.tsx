@@ -9,6 +9,7 @@ import Error from "../components/Error";
 import { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import Timer from "../components/Timer";
+import QuestionHeader from "../components/QuestionHeader";
 
 function Quiz() {
   const [
@@ -38,16 +39,22 @@ function Quiz() {
       {isRender(status, "loading") && <Loader />}
       {isRender(status, "error") && <Error />}
       {isRender(status, "ready") && (
-        <div className="w-7xl flex flex-col justify-center items-center">
-          <h3 className="font-Nunito text-4xl font-black m-8">
-            {questions.length} Questions to test your knowledge !
-          </h3>
+        <QuestionHeader questionsLength={questions.length}>
           <Button
             style="btn btn-active btn-lg md:text-lg"
             setClick={() => dispatch({ type: "start", payload: null })}
-            title={"Let's start"}
+            title={"Start Quiz"}
           />
-        </div>
+        </QuestionHeader>
+      )}
+      {isRender(status, "finish") && (
+        <QuestionHeader questionsLength={questions.length}>
+          <Button
+            style="btn btn-active btn-lg md:text-lg"
+            title={"Restart Quiz"}
+            setClick={() => dispatch({ type: "restartQuiz", payload: null })}
+          />
+        </QuestionHeader>
       )}
       {isRender(status, "start") && (
         <div className="m-6">
@@ -104,15 +111,6 @@ function Quiz() {
               </Link>
             )}
           </div>
-        </div>
-      )}
-      {isRender(status, "finish") && (
-        <div>
-          <Button
-            style="btn btn-active btn-lg md:text-lg"
-            title={"Restart quiz"}
-            setClick={() => dispatch({ type: "restartQuiz", payload: null })}
-          />
         </div>
       )}
     </div>

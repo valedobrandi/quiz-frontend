@@ -26,14 +26,14 @@ export default function SignIn() {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const checkUsernameRule = validateUsername(username);
     const checkPasswordRule = validatePassword(password);
     setWarning(checkUsernameRule ? checkUsernameRule : checkPasswordRule);
     if (checkPasswordRule) return;
     setWarning("");
-    await fetch("/user/login", {
+    await fetch("/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,9 @@ export default function SignIn() {
     <>
 
       <form
-        className="flex flex-col max-w-[400px] justify-center item-center m-auto gap-3 p-10"
+        onSubmit={(event) => handleSubmit(event)}
+        className="flex flex-col max-w-[400px] justify-center 
+        item-center m-auto gap-3 p-10"
       >
         <input
           autoComplete="true"
@@ -83,11 +85,11 @@ export default function SignIn() {
           </p>
           <button
             className="btn btn-primary btn-sm bg-[#641ae6] font-black text-[#f1f3f5] uppercase"
-            onClick={(event) => handleSubmit(event)}
           >
             enter
           </button>
-          <button className="font-md btn btn-primary btn-sm bg-[#641ae6] font-black uppercase">
+          <button className="font-md btn btn-primary btn-sm 
+          bg-[#641ae6] font-black uppercase">
             register
           </button>
           <GoogleSignInButton />

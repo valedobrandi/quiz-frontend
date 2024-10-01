@@ -2,7 +2,7 @@
 const validateUsername = (password: string) => {
     const rules = [
       {
-        regex: /[A-Z]/,
+        regex: /[A-Za-z]/,
         message: "Enter a username.",
       },
     ];

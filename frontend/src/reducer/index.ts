@@ -46,7 +46,7 @@ export default function reducer(
         index: 0,
         answer: null,
         points: 0,
-        status: "ready",
+        status: "start",
         seconds: 15,
       };
     case "timeOut":
