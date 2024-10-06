@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import validatePassword from "../utils/validPassword";
 import validateUsername from "../utils/validUsername";
 import GoogleSignInButton from "./GoogleSignInButton";
@@ -10,6 +10,21 @@ export default function SignIn() {
   const [warning, setWarning] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const request = async () => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/access`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response.status === 200) {
+        navigate("/finish");
+      }
+    }
+
+    request();
+
+  });
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
@@ -33,8 +48,9 @@ export default function SignIn() {
     setWarning(checkUsernameRule ? checkUsernameRule : checkPasswordRule);
     if (checkPasswordRule) return;
     setWarning("");
-    await fetch("/auth/register", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,7 +60,6 @@ export default function SignIn() {
 
   return (
     <>
-
       <form
         onSubmit={(event) => handleSubmit(event)}
         className="flex flex-col max-w-[400px] justify-center 
@@ -53,7 +68,10 @@ export default function SignIn() {
         <input
           autoComplete="true"
           type="text"
-          className="input input-bordered input-info bg-slate-100 rounded p-2 text-sm input-sm"
+          className="
+          input input-bordered input-info 
+          bg-slate-100 rounded p-2 text-sm input-sm
+          placeholder: text-black placeholder: font-bold"
           placeholder="Username"
           name="username"
           value={username}
@@ -63,7 +81,10 @@ export default function SignIn() {
           <input
             autoComplete="true"
             type={showPassword ? "text" : "password"}
-            className="input input-bordered input-info bg-slate-100 rounded p-2 text-sm input-sm w-full"
+            className="
+            input input-bordered input-info bg-slate-100 
+            rounded p-2 text-sm input-sm w-full
+            placeholder: text-black placeholder: font-bold"
             placeholder="Password"
             name="password"
             value={password}

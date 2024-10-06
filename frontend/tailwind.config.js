@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from "daisyui";
-import tailwindcss_animated from "tailwindcss-animated"
 
 export default {
   content: [
@@ -14,9 +13,9 @@ export default {
       Coiny: ['Coiny', 'Arial', 'sans-serif']
     }
   },
-  plugins: [daisyui, tailwindcss_animated],
+  plugins: [daisyui],
   daisyui: {
-    themes: ["halloween"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    themes: ["dark"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "halloween", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components

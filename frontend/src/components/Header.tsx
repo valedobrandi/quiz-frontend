@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 
+
 const Header: React.FC = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = document.cookie
+    console.log(token);
+    
+  })
+
 
   return (
     <header className=" p-4 flex flex-wrap items-center justify-start font-bold uppercase tracking-wide mb-4 ">
