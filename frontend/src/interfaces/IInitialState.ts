@@ -8,5 +8,5 @@ export interface IInitialState {
   points: number;
   highScore: number;
   seconds: number;
-  user: null | string;
+  username: null | string;
 }

@@ -7,7 +7,7 @@ export default function reducer(
 ): IInitialState {
   switch (action.type) {
     case "access":  
-      return { ...state, user: action.payload };     
+      return { ...state, username: action.payload };     
     case "success":
       return {
         ...state,

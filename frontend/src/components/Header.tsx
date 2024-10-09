@@ -1,24 +1,13 @@
-import { useEffect, useReducer } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-import reducer from "../reducer";
-import { initialState } from "../reducer/store";
 
 
 type HeaderProps = {
-  onUser: string;
+  username: string | null;
 }
 
-function Header() {
+function Header({username}: HeaderProps) {
   const navigate = useNavigate();
-  const [state] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    console.log("EFFECT", state.user);
-  }, [state]);
-
-
-
 
   const render = (isRender: boolean | string | null) => isRender 
 
@@ -61,19 +50,19 @@ function Header() {
           Challenge Your self and Rise to the Top!
         </p>
       </div>
-      {render(!state.user) && (
+      {render(!username) && (
         <Button 
         title="enter / register" 
         setClick={() => navigate("/singIn")} 
         />
       )}
-      {render(state.user) && (
+      {render(username) && (
         <p 
         className="
         text-white 
         text-center
         ml-6"
-        >Welcome, {status}</p>
+        >Welcome, {username}</p>
       )}
       
     </header>
