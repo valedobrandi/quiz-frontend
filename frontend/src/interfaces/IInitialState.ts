@@ -9,4 +9,5 @@ export interface IInitialState {
   highScore: number;
   seconds: number;
   show_hide: boolean;
+  user: null | string;
 }

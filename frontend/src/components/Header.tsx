@@ -1,33 +1,80 @@
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import reducer from "../reducer";
+import { initialState } from "../reducer/store";
 
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  user: string;
+}
+
+function Header({user}: HeaderProps ){
   const navigate = useNavigate();
+  const [{}, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const token = document.cookie
-    console.log(token);
-    
-  })
+    dispatch({type: 'access', payload: user})
+  }, [user])
 
+  const render = (isRender: boolean | string) => isRender 
 
   return (
-    <header className=" p-4 flex flex-wrap items-center justify-start font-bold uppercase tracking-wide mb-4 ">
-      <div className="flex items-center justify-center md:m-0 mb-3">
-        <img className="w-12 h-12 b" src="icons8-quiz-100(1).png" alt="" />
-        <p className="ml-4 text-sm text-center md:text-lg md:text-right tracking-wide">
+    <header
+      className="
+    p-4 
+    flex 
+    flex-wrap 
+    items-center 
+    justify-start 
+    font-bold 
+    uppercase 
+    tracking-wide mb-4"
+    >
+      <div
+        className="
+      flex 
+      items-center 
+      justify-center 
+      md:m-0"
+      >
+        <img
+          className="
+        w-12 
+        h-12"
+          src="icons8-quiz-100(1).png"
+          alt="quiz icon"
+        />
+        <p
+          className="
+        ml-4 
+        text-sm 
+        text-center 
+        tracking-wide
+        md:text-lg 
+        md:text-right 
+        "
+        >
           Challenge Your self and Rise to the Top!
         </p>
       </div>
-      <Button
-        style="mt-2 md:mt-0"
-        title="enter / register"
-        setClick={() => navigate("/singIn")}
-      />
+      {render(!user) && (
+        <Button 
+        title="enter / register" 
+        setClick={() => navigate("/singIn")} 
+        />
+      )}
+      {render(user) && (
+        <p 
+        className="
+        text-white 
+        text-center
+        ml-6"
+        >Welcome, {user}</p>
+      )}
+      
     </header>
   );
-};
+}
 
 export default Header;

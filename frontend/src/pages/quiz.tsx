@@ -10,6 +10,7 @@ import { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import Timer from "../components/Timer";
 import QuestionHeader from "../components/QuestionHeader";
+import Header from "../components/Header";
 
 function Quiz() {
   const [
@@ -35,85 +36,89 @@ function Quiz() {
   const isFinish = index + 1 === questions.length;
 
   return (
-    <div className="mt-24">
-      {isRender(status, "loading") && <Loader />}
-      {isRender(status, "error") && <Error />}
-      {isRender(status, "ready") && (
-        <QuestionHeader questionsLength={questions.length}>
-          <Button
-            style="btn btn-active btn-lg md:text-lg"
-            setClick={() => dispatch({ type: "start", payload: null })}
-            title={"Start Quiz"}
-          />
-        </QuestionHeader>
-      )}
-      {isRender(status, "finish") && (
-        <QuestionHeader questionsLength={questions.length}>
-          <Button
-            style="btn btn-active btn-lg md:text-lg"
-            title={"Restart Quiz"}
-            setClick={() => dispatch({ type: "restartQuiz", payload: null })}
-          />
-        </QuestionHeader>
-      )}
-      {isRender(status, "start") && (
-        <div className="m-6">
-          <div className="mx-auto">
-            <Progress
-              index={index}
-              points={points}
-              questions={questions}
-              totalPoints={highScore}
-            />
-            <div>
-              <h4
-                className="terminal-box text-lg p-4 md:text-2xl w-full 
-               justify-start h-full text-xl mb-4 text-center"
-              >
-                {questions[index].question}
-              </h4>
-            </div>
-            <div className="options">
-              <Options
-                dispatch={dispatch}
-                answerOptions={questions[index].answers}
-                correctAnswer={Number(questions[index].correct_answer)}
-                answer={answer}
-              />
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <Timer dispatch={dispatch} seconds={seconds} />
+    <>
+      {" "}
+      <Header />
+      <div className="mt-24">
+        {isRender(status, "loading") && <Loader />}
+        {isRender(status, "error") && <Error />}
+        {isRender(status, "ready") && (
+          <QuestionHeader questionsLength={questions.length}>
             <Button
               style="btn btn-active btn-lg md:text-lg"
-              isDisable={answer === null || isFinish}
-              title={"Next"}
-              setClick={() => {
-                dispatch({
-                  type: "nextQuestion",
-                  payload: questions[index].correct_answers,
-                });
-              }}
+              setClick={() => dispatch({ type: "start", payload: null })}
+              title={"Start Quiz"}
             />
-            {isFinish && (
-              <Link to={"/finish"}>
-                <Button
-                  style="btn btn-active btn-lg md:text-lg"
-                  isDisable={answer === null}
-                  title={"Finish"}
-                  setClick={() => {
-                    dispatch({
-                      type: "finished",
-                      payload: questions[index].correct_answers,
-                    });
-                  }}
+          </QuestionHeader>
+        )}
+        {isRender(status, "finish") && (
+          <QuestionHeader questionsLength={questions.length}>
+            <Button
+              style="btn btn-active btn-lg md:text-lg"
+              title={"Restart Quiz"}
+              setClick={() => dispatch({ type: "restartQuiz", payload: null })}
+            />
+          </QuestionHeader>
+        )}
+        {isRender(status, "start") && (
+          <div className="m-6">
+            <div className="mx-auto">
+              <Progress
+                index={index}
+                points={points}
+                questions={questions}
+                totalPoints={highScore}
+              />
+              <div>
+                <h4
+                  className="terminal-box text-lg p-4 md:text-2xl w-full 
+               justify-start h-full text-xl mb-4 text-center"
+                >
+                  {questions[index].question}
+                </h4>
+              </div>
+              <div className="options">
+                <Options
+                  dispatch={dispatch}
+                  answerOptions={questions[index].answers}
+                  correctAnswer={Number(questions[index].correct_answer)}
+                  answer={answer}
                 />
-              </Link>
-            )}
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <Timer dispatch={dispatch} seconds={seconds} />
+              <Button
+                style="btn btn-active btn-lg md:text-lg"
+                isDisable={answer === null || isFinish}
+                title={"Next"}
+                setClick={() => {
+                  dispatch({
+                    type: "nextQuestion",
+                    payload: questions[index].correct_answers,
+                  });
+                }}
+              />
+              {isFinish && (
+                <Link to={"/finish"}>
+                  <Button
+                    style="btn btn-active btn-lg md:text-lg"
+                    isDisable={answer === null}
+                    title={"Finish"}
+                    setClick={() => {
+                      dispatch({
+                        type: "finished",
+                        payload: questions[index].correct_answers,
+                      });
+                    }}
+                  />
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

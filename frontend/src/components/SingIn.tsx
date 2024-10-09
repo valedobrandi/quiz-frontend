@@ -1,67 +1,32 @@
-import { useEffect, useState } from "react";
-import validatePassword from "../utils/validPassword";
-import validateUsername from "../utils/validUsername";
 import GoogleSignInButton from "./GoogleSignInButton";
+import useAuthForm from "../customHooks/useAuthForm";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
+
+
 
 export default function SignIn() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [warning, setWarning] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  
+  const {
+    username,
+    password,
+    warning,
+    showPassword,
+    handleFormChange,
+    toggleShowPassword,
+    register,
+    logIn,
+    user,
+  } = useAuthForm();
 
-  useEffect(() => {
-    const request = async () => {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/access`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (response.status === 200) {
-        navigate("/finish");
-      }
-    }
-
-    request();
-
-  });
-
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    switch (e.target.name) {
-      case "username":
-        setUsername(e.target.value);
-        break;
-      case "password":
-        setPassword(e.target.value);
-        break;
-    }
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const checkUsernameRule = validateUsername(username);
-    const checkPasswordRule = validatePassword(password);
-    setWarning(checkUsernameRule ? checkUsernameRule : checkPasswordRule);
-    if (checkPasswordRule) return;
-    setWarning("");
-    await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-  };
+  
 
   return (
     <>
+    <Header user={user} />
       <form
-        onSubmit={(event) => handleSubmit(event)}
+        onSubmit={register}
         className="flex flex-col max-w-[400px] justify-center 
         item-center m-auto gap-3 p-10"
       >
@@ -98,30 +63,59 @@ export default function SignIn() {
             />
           </button>
         </div>
-          <p
-            className="text-red-500 font-semibold text-sm text-center 
-          md:text-left md:ml-5 md:text-base "
-          >
-            {warning && warning}
-          </p>
-          <button
-            className="btn btn-primary btn-sm bg-[#641ae6] font-black text-[#f1f3f5] uppercase"
-          >
-            enter
-          </button>
-          <button className="font-md btn btn-primary btn-sm 
-          bg-[#641ae6] font-black uppercase">
-            register
-          </button>
-          <GoogleSignInButton />
+        <p
+          className="
+            text-red-500 
+            font-semibold 
+            text-sm 
+            text-center 
+            md:text-left 
+            md:ml-5 
+            md:text-base"
+        >
+          {warning && warning}
+        </p>
+        <button
+          className="
+            btn 
+            btn-primary 
+            btn-sm 
+            bg-[#641ae6] 
+            font-black 
+            text-[#f1f3f5] 
+            uppercase"
+            onClick={logIn}
+        >
+          enter
+        </button>
+        <button
+          className="
+            font-md 
+            btn 
+            btn-primary 
+            btn-sm 
+            bg-[#641ae6] 
+            font-black uppercase"
+          type="submit"
+          name="button"
+          value="submit"
+        >
+          register
+        </button>
+        <GoogleSignInButton />
       </form>
-      <button 
-          className="btn btn-active btn-xs h-fit m-4 bg-[#641ae6] text-[#f1f3f5] uppercase"
-          onClick={() => navigate(-1)}
-          >
-              <img src="icons8-arrow-48.png" alt="back" className="h-8 w-8 transform rotate-180"  />
-              back
-            </button>
+      <button
+        className="btn btn-active btn-xs h-fit m-4 bg-[#641ae6] text-[#f1f3f5] uppercase"
+        onClick={() => navigate(-1)}
+      >
+        <img
+          src="icons8-arrow-48.png"
+          alt="back"
+          className="h-8 w-8 transform rotate-180"
+        />
+        back
+      </button>
     </>
   );
 }
+

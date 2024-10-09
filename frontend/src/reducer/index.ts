@@ -6,6 +6,8 @@ export default function reducer(
   action: IAction
 ): IInitialState {
   switch (action.type) {
+    case "access":       
+      return { ...state, status: "ready" };
     case "show_hide":
       return { ...state, show_hide: !state.show_hide };
     case "success":
