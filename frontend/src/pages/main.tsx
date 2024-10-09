@@ -2,13 +2,11 @@ import StatCard from "../components/StatCard";
 import SideBoard from "../components/SideBoard";
 import SideCard from "../components/SideCard";
 import { MainPageCategories } from "../files/MainPageCategories";
-import Header from "../components/Header";
 
 const Main: React.FC = () => {
 
   return (
     <>
-          <Header />
       <main className="space-y-24 md:space-y-48 px-4">
         <section className="flex flex-col md:flex-row md:pt-24">
           <SideBoard

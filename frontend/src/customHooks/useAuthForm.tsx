@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import validatePassword from "../utils/validPassword";
 import validateUsername from "../utils/validUsername";
-import { useNavigate } from "react-router-dom";
+import reducer from "../reducer";
+import { initialState } from "../reducer/store";
 
 const useAuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [warning, setWarning] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState("");
-  const navigate = useNavigate();
+  
 
+  const [{}, dispatch] = useReducer(reducer, initialState);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
@@ -34,8 +35,6 @@ const useAuthForm = () => {
     setWarning(checkUsernameRule ? checkUsernameRule : checkPasswordRule);
     if (checkPasswordRule) return;
     setWarning("");
-    setUsername('');
-    setPassword('');
   };
 
   const handleFormHttp = async (URL: string) => {
@@ -50,9 +49,9 @@ const useAuthForm = () => {
     });
 
     const data = await response.json();
-
-    setUser(data);
-    navigate('/quiz');
+    console.log('DATA', data);
+    dispatch({ type: "start", payload: data });
+    
   };
 
   const register = async (event: React.FormEvent) => {
@@ -74,7 +73,6 @@ const useAuthForm = () => {
     toggleShowPassword,
     register,
     logIn,
-    user,
   };
 };
 export default useAuthForm;

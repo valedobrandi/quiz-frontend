@@ -6,18 +6,21 @@ import { initialState } from "../reducer/store";
 
 
 type HeaderProps = {
-  user: string;
+  onUser: string;
 }
 
-function Header({user}: HeaderProps ){
+function Header() {
   const navigate = useNavigate();
-  const [{}, dispatch] = useReducer(reducer, initialState);
+  const [state] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({type: 'access', payload: user})
-  }, [user])
+    console.log("EFFECT", state.user);
+  }, [state]);
 
-  const render = (isRender: boolean | string) => isRender 
+
+
+
+  const render = (isRender: boolean | string | null) => isRender 
 
   return (
     <header
@@ -58,19 +61,19 @@ function Header({user}: HeaderProps ){
           Challenge Your self and Rise to the Top!
         </p>
       </div>
-      {render(!user) && (
+      {render(!state.user) && (
         <Button 
         title="enter / register" 
         setClick={() => navigate("/singIn")} 
         />
       )}
-      {render(user) && (
+      {render(state.user) && (
         <p 
         className="
         text-white 
         text-center
         ml-6"
-        >Welcome, {user}</p>
+        >Welcome, {status}</p>
       )}
       
     </header>

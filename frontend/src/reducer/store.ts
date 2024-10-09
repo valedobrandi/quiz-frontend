@@ -8,6 +8,7 @@ export const initialState: IInitialState = {
   points: 0,
   highScore: 0,
   seconds: 15,
-  show_hide: false,
-  user: "ADMIN",
+  user: null,
 };
+
+

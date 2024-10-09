@@ -8,6 +8,5 @@ export interface IInitialState {
   points: number;
   highScore: number;
   seconds: number;
-  show_hide: boolean;
   user: null | string;
 }

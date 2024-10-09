@@ -10,7 +10,6 @@ import { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import Timer from "../components/Timer";
 import QuestionHeader from "../components/QuestionHeader";
-import Header from "../components/Header";
 
 function Quiz() {
   const [
@@ -37,8 +36,6 @@ function Quiz() {
 
   return (
     <>
-      {" "}
-      <Header />
       <div className="mt-24">
         {isRender(status, "loading") && <Loader />}
         {isRender(status, "error") && <Error />}
