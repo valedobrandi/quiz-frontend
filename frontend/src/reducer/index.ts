@@ -6,7 +6,7 @@ export default function reducer(
   action: IAction
 ): IInitialState {
   switch (action.type) {
-    case "access":  
+    case "setNickname":  
       return { ...state, username: action.payload };     
     case "success":
       return {
@@ -14,10 +14,15 @@ export default function reducer(
         questions: action.payload,
         status: "ready",
       };
+      case "refillQuestion":
+        return {
+          ...state,
+          questions: state.questions.concat(action.payload),
+        };
     case "fail":
       return { ...state, status: "error" };
     case "start":
-      return { ...state, status: "start" };
+      return { ...state, status: "start", seconds: 60 * 4 };
     case "finished":
       return { ...state, status: "finish" };
     case "answer": {
@@ -37,7 +42,6 @@ export default function reducer(
         index: state.index + 1,
         answer: null,
         points: state.points + answerPoints,
-        seconds: 15,
       };
     }
     case "restartQuiz":
@@ -47,10 +51,8 @@ export default function reducer(
         answer: null,
         points: 0,
         status: "start",
-        seconds: 15,
+        seconds: 60 * 4,
       };
-    case "timeOut":
-      return { ...state, answer: null, status: "finish" };
     case "tick":
       return { ...state, seconds: state.seconds - 1 };
     default:

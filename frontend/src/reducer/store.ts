@@ -7,7 +7,7 @@ export const initialState: IInitialState = {
   answer: null,
   points: 0,
   highScore: 0,
-  seconds: 15,
+  seconds: 0,
   username: null,
 };
 

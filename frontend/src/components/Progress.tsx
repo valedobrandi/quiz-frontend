@@ -1,38 +1,50 @@
+import { IAction } from "../interfaces/IAction";
 import { IQuestion } from "../interfaces/IQuestions";
+import Timer from "./Timer";
 
 type ProgressPropsType = {
   index: number;
   questions: IQuestion[];
   points: number;
   totalPoints: number;
+  dispatch: React.Dispatch<IAction>;
+  seconds: number;
 };
 
 export default function Progress({
   index,
-  questions,
   points,
+  dispatch,
+  seconds,
 }: ProgressPropsType) {
   return (
     <header>
       <div className="flex item-center gap-12 m-6">
-        <p className="badge badge-ghost md:text-xl p-6">
-          Question
-          <span className="ml-6">
-            <strong>{index + 1}</strong>
-          </span>
-          <span className="mx-1">/</span>
-          {questions.length}
-        </p>
-        <div className="badge badge-ghost 
-       inline-flex md:text-xl p-6">
+        <div className="badge badge-ghost inline-flex md:text-xl p-6">
           <img
-            className="h-6 mr-4 "
+            className="h-10 mr-4"
+            src="question-and-answer.svg"
+            alt="statistics picture"
+          />
+          <p className="md:text-2xl">
+            <strong>{index + 1}</strong>
+          </p>
+        </div>
+        <div className="badge badge-ghost inline-flex md:text-xl p-6">
+          <img
+            className="h-7 mr-4"
             src="profits-statistics-svgrepo-com.svg"
             alt="statistics picture"
           />
           <p className="md:text-2xl">
-            {points}
+          <strong>{points}</strong> 
           </p>
+        </div>
+        <div
+          className="badge badge-ghost 
+       inline-flex md:text-xl p-6"
+        >
+          <Timer dispatch={dispatch} seconds={seconds} />
         </div>
       </div>
       <progress

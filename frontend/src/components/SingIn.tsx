@@ -9,18 +9,21 @@ type ReactEvent = React.FormEvent<HTMLFormElement>;
 const ACCESS_URL = `${import.meta.env.VITE_BACKEND_URL}/auth/access`;
 const REGISTER_URL = `${import.meta.env.VITE_BACKEND_URL}/auth/register`;
 
-export default function SignIn({ dispatch }: { dispatch: any }) {
+export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [warning, setWarning] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case "username":
         setUsername(e.target.value);
+        break;
+      case "email":
+        setEmail(e.target.value);
         break;
       case "password":
         setPassword(e.target.value);
@@ -35,16 +38,20 @@ export default function SignIn({ dispatch }: { dispatch: any }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, email, password }),
     });
 
     const data = await response.json();
-
-    dispatch({ type: "access", payload: data });
+        
+    if (response.statusText.toUpperCase() === 'CREATED') {
+      navigate("/");  
+      return;
+    }
+    
+    setWarning(data.message);
   };
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
-
 
   const handleFormSubmit = () => {
     const checkUsernameRule = validateUsername(username);
@@ -53,15 +60,13 @@ export default function SignIn({ dispatch }: { dispatch: any }) {
     if (checkPasswordRule) return;
     setWarning("");
   };
-  
-  
+
   const register = async (event: ReactEvent) => {
     event.preventDefault();
     handleFormSubmit();
     fetchData(REGISTER_URL);
-    
   };
-  
+
   const logIn = async (event: React.MouseEvent) => {
     event.preventDefault();
     handleFormSubmit();
@@ -75,27 +80,48 @@ export default function SignIn({ dispatch }: { dispatch: any }) {
         className="flex flex-col max-w-[400px] justify-center 
         item-center m-auto gap-3 p-10"
       >
+        <div className="label">
+          <span className="label-text text-white font-bold">USERNAME</span>
+        </div>
         <input
           autoComplete="true"
           type="text"
           className="
-          input input-bordered input-info 
-          bg-slate-100 rounded p-2 text-sm input-sm
-          placeholder: text-black placeholder: font-bold"
-          placeholder="Username"
+          input input-bordered text-black
+          rounded p-2 text-sm input-sm
+          placeholder:font-bold"
+          placeholder="username"
           name="username"
           value={username}
           onChange={handleFormChange}
         />
+        <div className="label">
+          <span className="label-text text-white font-bold">EMAIL</span>
+        </div>
+        <input
+          autoComplete="true"
+          type="text"
+          className="
+          input input-bordered text-black
+          rounded p-2 text-sm input-sm
+          placeholder:font-bold"
+          placeholder="email"
+          name="email"
+          value={email}
+          onChange={handleFormChange}
+        />
+        <div className="label">
+          <span className="label-text text-white font-bold">PASSWORD</span>
+        </div>
         <div className="relative flex items-center shrink-0">
           <input
             autoComplete="true"
             type={showPassword ? "text" : "password"}
             className="
-            input input-bordered input-info bg-slate-100 
+            input input-bordered text-black
             rounded p-2 text-sm input-sm w-full
-            placeholder: text-black placeholder: font-bold"
-            placeholder="Password"
+            placeholder:font-bold"
+            placeholder="password"
             name="password"
             value={password}
             onChange={handleFormChange}
@@ -121,7 +147,7 @@ export default function SignIn({ dispatch }: { dispatch: any }) {
           {warning && warning}
         </p>
         <button
-        type="button"
+          type="button"
           className="
             btn 
             btn-primary 

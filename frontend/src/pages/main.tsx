@@ -6,7 +6,6 @@ import { MainPageCategories } from "../files/MainPageCategories";
 const Main: React.FC = () => {
 
   return (
-    <>
       <main className="space-y-24 md:space-y-48 px-4">
         <section className="flex flex-col md:flex-row md:pt-24">
           <SideBoard
@@ -66,7 +65,6 @@ const Main: React.FC = () => {
             </div>
         </section>
       </main>
-    </>
   );
 };
 
