@@ -10,46 +10,48 @@ import { useEffect, useReducer, useRef } from "react";
 
 type QuizPropsType = {
   setUsername: React.Dispatch<any>;
-  username: string;
+  username: string | null;
 };
 
 function Quiz({ setUsername, username }: QuizPropsType) {
   const [
-    { status, questions, index, answer, points, highScore, seconds },
+    { status, questions, categories, index, answer, points, highScore, seconds },
     dispatch,
   ] = useReducer(reducer, initialState);
   const userRef = useRef("");
-  const checkQuestionIndex = questions.length - index > 6;
+
 
   useEffect(() => {
-    const get = async () => {
+    if (questions.length % 10 !== 0) return
+    const fetchQuestions = async () => {
       try {
         const questions = await fetch("http://localhost:3001/quiz");
         const data = await questions.json();
 
-        dispatch({ type: "refillQuestions", payload: data });
+        dispatch({ type: "refreshQuestion", payload: data });
       } catch (error) {
         console.log(error);
         dispatch({ type: "fail", payload: null });
       }
     };
-    get();
-  }, [checkQuestionIndex]);
+    fetchQuestions();
+  }, [index]);
 
   useEffect(() => {
-    const get = async () => {
+    const fetchQuestions = async () => {
       try {
         const questions = await fetch("http://localhost:3001/quiz");
         const data = await questions.json();
-
+        
         dispatch({ type: "success", payload: data });
       } catch (error) {
         console.log(error);
         dispatch({ type: "fail", payload: null });
       }
     };
-    get();
+    fetchQuestions();
   }, []);
+
 
   return (
     <div className="my-12">
@@ -63,7 +65,6 @@ function Quiz({ setUsername, username }: QuizPropsType) {
           <div className="flex flex-col items-center">
             {!username && (
               <input
-                value={userRef.current}
                 onChange={({ target }) => (userRef.current = target.value)}
                 type="text"
                 placeholder="Type your nickname"
@@ -84,7 +85,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
       {isRender(status, "finish") && (
         <div className="m-8 text-center">
           <h1 className="font-Nunito md:text-4xl text-2xl font-black m-8 text-center">
-            You have 4 minutes to answer how many question you can.
+            You have 2 minutes to answer how many question you can.
           </h1>
           <Button
             style="btn btn-active btn-lg md:text-lg"
@@ -97,6 +98,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
         <div className="m-6">
           <div className="mx-auto">
             <Progress
+              categories={categories}
               seconds={seconds}
               dispatch={dispatch}
               index={index}
@@ -118,6 +120,20 @@ function Quiz({ setUsername, username }: QuizPropsType) {
                 answerOptions={questions[index].answers}
                 correctAnswer={Number(questions[index].correct_answer)}
                 answer={answer}
+              />
+            </div>
+          </div>
+          <div className="items-center flex w-[95%]">
+            <div className="w-full">
+              <Button
+                style="btn btn-active btn-lg btn-block md:text-lg mx-12"
+                title={"Next"}
+                setClick={() => {
+                  dispatch({
+                    type: "nextQuestion",
+                    payload: questions[index].correct_answers,
+                  });
+                }}
               />
             </div>
           </div>

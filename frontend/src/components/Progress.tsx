@@ -1,4 +1,5 @@
 import { IAction } from "../interfaces/IAction";
+import { ICategoryPoints } from "../interfaces/IInitialState";
 import { IQuestion } from "../interfaces/IQuestions";
 import Timer from "./Timer";
 
@@ -9,6 +10,7 @@ type ProgressPropsType = {
   totalPoints: number;
   dispatch: React.Dispatch<IAction>;
   seconds: number;
+  categories: ICategoryPoints;
 };
 
 export default function Progress({
@@ -16,9 +18,11 @@ export default function Progress({
   points,
   dispatch,
   seconds,
+  categories,
+  totalPoints
 }: ProgressPropsType) {
   return (
-    <header>
+    <section>
       <div className="flex item-center gap-12 m-6">
         <div className="badge badge-ghost inline-flex md:text-xl p-6">
           <img
@@ -37,14 +41,19 @@ export default function Progress({
             alt="statistics picture"
           />
           <p className="md:text-2xl">
-          <strong>{points}</strong> 
+            <strong>{points}</strong>
           </p>
         </div>
         <div
           className="badge badge-ghost 
        inline-flex md:text-xl p-6"
         >
-          <Timer dispatch={dispatch} seconds={seconds} />
+          <Timer
+            totalPoints={totalPoints}
+            dispatch={dispatch}
+            seconds={seconds}
+            categories={categories}
+          />
         </div>
       </div>
       <progress
@@ -53,6 +62,6 @@ export default function Progress({
         value={index + 1}
         max={20}
       ></progress>
-    </header>
+    </section>
   );
 }

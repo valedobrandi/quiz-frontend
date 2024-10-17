@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import { IAction } from "../interfaces/IAction";
 import { useNavigate } from "react-router-dom";
+import { ICategoryPoints } from "../interfaces/IInitialState";
+
 type TimerPropsType = {
   dispatch: React.Dispatch<IAction>;
   seconds: number;
+  categories: ICategoryPoints;
+  totalPoints: number;
 };
-export default function Timer({ dispatch, seconds }: TimerPropsType) {
+export default function Timer({ dispatch, seconds, categories, totalPoints }: TimerPropsType) {
   const navigate = useNavigate();
   useEffect(() => {
     if (seconds === 0) {
       dispatch({ type: "finished", payload: null });
-      navigate("/finish");
+      navigate("/finish", { state: { categories, totalPoints } });
     }
     const id = setInterval(() => {
       dispatch({ type: "tick", payload: null });

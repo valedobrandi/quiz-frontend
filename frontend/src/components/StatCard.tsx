@@ -2,11 +2,7 @@ import React from "react";
 
 interface StatCardProps {
   title: string;
-  icon: string;
   value: number;
-  unit: string;
-  description: string;
-  percentage: number;
   index: number;
 }
 
@@ -15,18 +11,15 @@ const backgroundColor = [
   "css-ranking-container-background-color mr-1",
 ];
 
-const StatCard: React.FC<StatCardProps> = ({
-  title,
-  icon,
-  value,
-  unit,
-  percentage,
-  description,
-  index
-}) => {
-  const getBackgroundColor = index % 2 === 0 ? backgroundColor[0] : backgroundColor[1];
+const StatCard: React.FC<StatCardProps> = ({ title, value, index }) => {
+
+  const getBackgroundColor =
+    index % 2 === 0 ? backgroundColor[0] : backgroundColor[1];
+
+  const pix =(value * 20) + 120;
+
   const windowWidth = window.innerWidth;
-  const styledSize = windowWidth < 400 ? `${percentage}rem` : `${percentage}rem`;
+  const styledSize = windowWidth < 400 ? `${pix}px` : `${pix}px`;
   return (
     <div
       className={`${getBackgroundColor} rounded-full m-auto flex justify-center item-center 
@@ -34,22 +27,22 @@ const StatCard: React.FC<StatCardProps> = ({
       style={{ width: `${styledSize}`, height: `${styledSize}` }}
     >
       <span
-        className="stat-title font-semibold uppercase 
-      whitespace-normal leading-3 text-sm opacity-100 
-      text-center text-gray-100"
+        className="stat-title font-black uppercase 
+      whitespace-normal leading-3 text-sm
+      text-center text-black"
       >
-        <div className="inline text-lg mr-2 text-center">{icon}</div>
+        {/* <div className="inline text-lg mr-2 text-center">{icon}</div> */}
         {title}
       </span>
-      <span className="stat-value overflow-hidden text-center">
-        {value} <span className="unit">{unit}</span>
+      <span className="stat-value overflow-hidden text-center mt-2">
+        {value}
       </span>
-      <span
+      {/*       <span
         className="stat-desc whitespace-normal 
       text-center opacity-100 text-gray-200"
       >
         {description}
-      </span>
+      </span> */}
     </div>
   );
 };

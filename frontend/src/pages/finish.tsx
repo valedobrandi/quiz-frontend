@@ -4,10 +4,12 @@ import ToggleView from "../components/ToggleView";
 import PerformanceOverview from "../components/PerformanceOverview";
 import CategoryLeaderboard from "../components/Leaderboard";
 import HeaderSection from "../components/HeaderSection";
+import { useLocation } from "react-router-dom";
 
 function Finish() {
   const [toggleView, setToggleView] = useState(true);
-
+  const location = useLocation();
+  const { categories, totalPoints } = location.state || {};
   useEffect(() => {
     const scrollToCenter = () => {
       if (!toggleView) {
@@ -21,7 +23,7 @@ function Finish() {
 
   return (
     <>
-      <PerformanceOverview />
+      <PerformanceOverview totalPoints={totalPoints} />
       <ToggleView setToggleView={() => setToggleView(!toggleView)} />
       <section className="flex flex-col w-fit justify-center mt-10 pb-36">
         {toggleView ? (
@@ -37,7 +39,7 @@ function Finish() {
             imageSrc="chart-graph-svgrepo-com.svg"
           />
         )}
-        {toggleView ? <Ranking /> : <CategoryLeaderboard />}
+        {toggleView ? <Ranking /> : <CategoryLeaderboard categories={categories}/>}
       </section>
     </>
   );

@@ -16,7 +16,10 @@ const App: React.FC = () => {
       <Header username={username} />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/quiz" element={<Quiz setUsername={dispatch} username={username} />} />
+        <Route
+          path="/quiz"
+          element={<Quiz setUsername={dispatch} username={username} />}
+        />
         <Route path="/finish" element={<Finish />} />
         <Route path="/singIn" element={<SignIn />} />
       </Routes>

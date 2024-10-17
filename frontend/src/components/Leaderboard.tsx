@@ -1,27 +1,28 @@
 import useCategory from "../customHooks/useCategory";
+import { ICategoryPoints } from "../interfaces/IInitialState";
 import StatCard from "./StatCard";
 
-function CategoryLeaderboard() {
-  const { categoryList } = useCategory();
+type CategoryLeaderboardPropsType = {
+  categories: ICategoryPoints;
+};
+
+function CategoryLeaderboard({ categories }: CategoryLeaderboardPropsType) {
+  const { categoryList } = useCategory(categories);
   return (
     <ul role="list" className="flex flex-col">
       <div className="flex flex-wrap w-[50%] h-[50%] mx-auto">
-        {categoryList.map((category, index) => {
-          return (
-            <li>
-              <StatCard
-                index={index}
-                percentage={category.percentage}
-                key={index}
-                description=""
-                icon=""
-                title="PIC"
-                unit=""
-                value={category.points}
-              />
-            </li>
-          );
-        })}
+        {categoryList &&
+          Object.keys(categoryList).map((name, index) => {
+            return (
+              <li key={index}>
+                <StatCard
+                  index={index}
+                  title={name}
+                  value={categoryList[name]}
+                />
+              </li>
+            );
+          })}
       </div>
     </ul>
   );

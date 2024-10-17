@@ -1,4 +1,9 @@
-export function ScoreBadge({ style = "", image = "", value = "", title = "" }) {
+export function ScoreBadge({
+   style = "", 
+   image = "", 
+   value = 0, 
+   title = "" 
+  }) {
   return (
     <div className={`md:p-5 p-4 ${style} flex items-center md:gap-4 tracking-wider font-Coiny`}>
       <img className="md:w-6 md:h-6 w-4 h-4" src={image} alt="crown image" />

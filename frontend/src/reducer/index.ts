@@ -14,7 +14,7 @@ export default function reducer(
         questions: action.payload,
         status: "ready",
       };
-      case "refillQuestion":
+      case "refreshQuestion":     
         return {
           ...state,
           questions: state.questions.concat(action.payload),
@@ -22,9 +22,19 @@ export default function reducer(
     case "fail":
       return { ...state, status: "error" };
     case "start":
-      return { ...state, status: "start", seconds: 60 * 4 };
+      return { ...state, status: "start", seconds: 10 * 2 };
     case "finished":
-      return { ...state, status: "finish" };
+
+      return { 
+        ...state,  
+        questions: [],
+        status: "loading",
+        index: 0,
+        answer: null,
+        points: 0,
+        highScore: 0,
+        seconds: 0,
+      };
     case "answer": {
       const { points, highScore } = state;
       return {
@@ -37,11 +47,20 @@ export default function reducer(
       const { answer } = state;
       let answerPoints = 0;
       if (action.payload === answer) answerPoints = 1;
+      const categoryName = state.questions[state.index].category;
+
+      const getCategoryAndPoint = { 
+        ...state.categories,
+        [categoryName]: (state.categories[categoryName] || 0 ) + answerPoints
+      };
+
       return {
         ...state,
+        categories: {...state.categories,  ...getCategoryAndPoint},
         index: state.index + 1,
         answer: null,
         points: state.points + answerPoints,
+        highScore: answerPoints + state.highScore,
       };
     }
     case "restartQuiz":
