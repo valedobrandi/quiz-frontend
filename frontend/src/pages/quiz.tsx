@@ -10,7 +10,7 @@ import { useEffect, useReducer, useRef } from "react";
 
 type QuizPropsType = {
   setUsername: React.Dispatch<any>;
-  username: string | null;
+  username: string;
 };
 
 function Quiz({ setUsername, username }: QuizPropsType) {
@@ -22,9 +22,10 @@ function Quiz({ setUsername, username }: QuizPropsType) {
       index,
       answer,
       points,
-      highScore,
       seconds,
       nextQuestion,
+      sequence,
+      bonus,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -51,7 +52,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
       try {
         const questions = await fetch("http://localhost:3001/quiz");
         const data = await questions.json();
-
+        
         dispatch({ type: "success", payload: data });
       } catch (error) {
         console.log(error);
@@ -63,7 +64,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
 
   useEffect(() => {
     if (nextQuestion === 0) return;
-    
+
     const timeoutId = setTimeout(() => {
       dispatch({
         type: "nextQuestion",
@@ -72,7 +73,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
     }, 1000);
 
 
-    return () => clearTimeout(timeoutId); // Limpa o timeout quando o componente desmonta ou `nextQuestion` muda
+    return () => clearTimeout(timeoutId); 
 
   }, [nextQuestion]);
 
@@ -90,7 +91,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
               <input
                 onChange={({ target }) => (userRef.current = target.value)}
                 type="text"
-                placeholder="Type your nickname"
+                placeholder="type your nickname ..."
                 className="input input-bordered input-warning w-full max-w-xs m-4"
               />
             )}
@@ -127,7 +128,8 @@ function Quiz({ setUsername, username }: QuizPropsType) {
               dispatch={dispatch}
               index={index}
               points={points}
-              totalPoints={highScore}
+              sequence={sequence}
+              bonus={bonus}
             />
             <div>
               <h4
@@ -141,25 +143,11 @@ function Quiz({ setUsername, username }: QuizPropsType) {
               <Options
                 dispatch={dispatch}
                 answerOptions={questions[index].answers}
-                correctAnswer={Number(questions[index].correct_answer)}
+                correctAnswer={Number(questions[index].correct_answers)}
                 answer={answer}
               />
             </div>
           </div>
-{/*           <div className="items-center flex w-[95%]">
-            <div className="w-full">
-              <Button
-                style="btn btn-active btn-lg btn-block md:text-lg mx-12"
-                title={"Next"}
-                setClick={() => {
-                  dispatch({
-                    type: "nextQuestion",
-                    payload: questions[index].correct_answers,
-                  });
-                }}
-              />
-            </div>
-          </div> */}
         </div>
       )}
     </div>

@@ -22,8 +22,7 @@ export default function Options({ answerOptions, dispatch, correctAnswer, answer
       return (
         <div key={answerOption} >
           <button
-            className={`badge text-lg p-4 md:text-2xl w-full 
-               justify-start h-full
+            className={`badge text-lg p-4 md:text-2xl w-full h-full 
                ${applyStyleTranslate && applyStyleWrongCorrectColor}
                ${!isDisabled && hoverTranslate}
                ${isDisabled && styleOption}

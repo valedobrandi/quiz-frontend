@@ -7,14 +7,14 @@ type TimerPropsType = {
   dispatch: React.Dispatch<IAction>;
   seconds: number;
   categories: ICategoryPoints;
-  totalPoints: number;
+  points: number;
   username: string;
 };
 export default function Timer({
   dispatch,
   seconds,
   categories,
-  totalPoints,
+  points,
   username,
 }: TimerPropsType) {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Timer({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, score: totalPoints }),
+        body: JSON.stringify({ username, score: points }),
       });
       if (response.ok) {
         console.log("score registered with successfully");
@@ -37,7 +37,7 @@ export default function Timer({
       if (seconds === 0) {
         await httpPostScore();
         dispatch({ type: "finished", payload: null });
-        navigate("/finish", { state: { categories, totalPoints } });
+        navigate("/finish", { state: { categories, points } });
       }
     };
 

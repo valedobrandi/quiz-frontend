@@ -7,7 +7,9 @@ export default function reducer(
 ): IInitialState {
   switch (action.type) {
     case "setNickname":
-      return { ...state, username: action.payload };
+      let username = action.payload
+      if (action.payload.trim() === '') username = "player"
+      return { ...state, username: username};
     case "success":
       return {
         ...state,
@@ -22,18 +24,25 @@ export default function reducer(
     case "fail":
       return { ...state, status: "error" };
     case "BONUS":
+      let time;
       switch (action.payload) {
         case 1:
-          return { ...state, seconds: state.seconds + 30 };
+          time = 30;
+          break
         case 2:
-          return { ...state, seconds: state.seconds + 60 };
+          time = 60;
+          break
         case 3:
-          return { ...state, seconds: state.seconds + 90 };
+          time = 90;
+          break
         case 4:
-          return { ...state, seconds: state.seconds + 120 };
+          time = 120;
+          break
         default:
-          return { ...state };
+          time = 0;
+          break
       }
+      return { ...state, seconds: state.seconds + time, sequence: 0, bonus: action.payload };
     case "start":
       return { ...state, status: "start", seconds: 60 * 2 };
     case "finished":
@@ -44,22 +53,21 @@ export default function reducer(
         index: 0,
         answer: null,
         points: 0,
-        highScore: 0,
         seconds: 0,
       };
     case "answer": {
-      const { points, highScore } = state;
       return {
         ...state,
         answer: Number(action.payload),
-        highScore: points > highScore ? points : highScore,
         nextQuestion: state.nextQuestion + 1,
       };
     }
     case "nextQuestion": {
       const { answer } = state;
       let answerPoints = 0;
+      let sequence = 0;
       if (action.payload === answer) answerPoints = 1;
+      if (action.payload === answer) sequence = state.sequence + 1;
       const categoryName = state.questions[state.index].category;
 
       const getCategoryAndPoint = {
@@ -73,7 +81,7 @@ export default function reducer(
         index: state.index + 1,
         answer: null,
         points: state.points + answerPoints,
-        highScore: answerPoints + state.highScore,
+        sequence
       };
     }
     case "restartQuiz":

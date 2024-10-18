@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import Timer from "./Timer";
+import { IAction } from "../interfaces/IAction";
 
 type ProgressPropsType = {
+  dispatch: React.Dispatch<IAction>;
   index: number;
   points: number;
-  dispatch: React.Dispatch<any>;
   seconds: number;
   categories: any;
-  totalPoints: number;
-  username: string | null;
+  username: string;
+  sequence: number;
+  bonus: number;
 };
 
 interface LevelProgress {
-  backgroundColor: {[key: number]: string};
-  borderColor: {[key: number]: string};
+  backgroundColor: { [key: number]: string };
+  borderColor: { [key: number]: string };
 }
 
 export default function Progress({
@@ -22,44 +24,30 @@ export default function Progress({
   dispatch,
   seconds,
   categories,
-  totalPoints,
   username,
+  sequence,
+  bonus
 }: ProgressPropsType) {
-  const [bonus, setBonus] = useState(0);
-  const [answerSequence, setAnswerSequence] = useState(0);
+
 
   useEffect(() => {
-    const points = { "prev": totalPoints + 1, "curr": totalPoints}
-
-    if (points.prev === points.curr) return setAnswerSequence(answerSequence + 1);
-    if (answerSequence === 5) return setBonus(1);
-    if (answerSequence === 5) return setAnswerSequence(0);
-    if (points.prev !== points.curr) return setAnswerSequence(0);
-
-  }, [totalPoints]);
-
-  useEffect(() => {
-
-    if (answerSequence === 5) {
-      setBonus(1)
-      dispatch({ type: "BONUS", payload: bonus });
-    } 
-
-  },[bonus])
+    if (sequence === 4) {
+      dispatch({ type: "BONUS", payload: bonus + 1});
+    }
+  }, [sequence]);
 
   const progressStyle: LevelProgress = {
     backgroundColor: {
-    1: '',
-    2: 'progress-info',
-    3: 'progress-success',
-    4: 'progress-warning',
-    5: 'progress-secondary'},
-    borderColor: { 
-    1: '200 border-2',
-    2: '300 border-4',
-    3: '400 border-8',
-    4: '500 border-8',
-    }
+      1: "progress-info",
+      2: "progress-warning",
+      3: "progress-secondary",
+    },
+    borderColor: {
+      1: "border-yellow-200 border-2",
+      2: "border-yellow-300 border-4",
+      3: "border-yellow-400 border-8",
+      4: "border-yellow-500 border-8",
+    },
   };
 
   return (
@@ -90,8 +78,8 @@ export default function Progress({
        inline-flex md:text-xl p-6"
         >
           <Timer
-            username={username || ""}
-            totalPoints={totalPoints}
+            username={username}
+            points={points}
             dispatch={dispatch}
             seconds={seconds}
             categories={categories}
@@ -100,11 +88,11 @@ export default function Progress({
       </div>
       <progress
         className={`progress 
-          progress-${progressStyle.backgroundColor[answerSequence]}
-          border-yellow-${progressStyle.borderColor[answerSequence]}
+          ${progressStyle.backgroundColor[sequence]}
+          ${progressStyle.borderColor[bonus]}
           md:h-5 h-3 w-full] mb-8`}
-        value={answerSequence}
-        max={5}
+        value={sequence}
+        max={3}
       ></progress>
     </section>
   );

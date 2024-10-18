@@ -7,16 +7,16 @@ import HeaderSection from "../components/HeaderSection";
 import { useLocation } from "react-router-dom";
 
 type FinishProps = {
-  username: string | null;
+  username: string;
 };
 
 function Finish({ username }: FinishProps) {
   const [toggleView, setToggleView] = useState(true);
   const [ranking, setRanking] = useState<{ username: string; score: number }[]>(
-    [{ username: "enter player", score: 0 }]
+    [{ username: "", score: 0 }]
   );
   const location = useLocation();
-  const { categories, totalPoints } = location.state || {};
+  const { categories, points } = location.state || {};
 
   useEffect(() => {
     const httpGetRanking = async () => {
@@ -41,10 +41,13 @@ function Finish({ username }: FinishProps) {
     scrollToCenter();
   }, [toggleView]);
   const sortRaking = ranking.sort((a, b) => b.score - a.score);
-  const getRanking = ranking.findIndex((user) => user.username === username);
+  console.log(username, points);
+  
+  const getRanking = sortRaking.findIndex((user) => (user.username === username) && (user.score === Number(points)));
+  
   return (
     <>
-      <PerformanceOverview totalPoints={totalPoints} userRanking={getRanking} />
+      <PerformanceOverview points={points} userRanking={getRanking + 1} />
       <ToggleView setToggleView={() => setToggleView(!toggleView)} />
       <section className="flex flex-col w-fit justify-center mt-10 pb-36">
         {toggleView ? (

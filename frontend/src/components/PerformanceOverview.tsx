@@ -1,15 +1,15 @@
 import { ScoreBadge } from "../components/ScoreBadge";
 
 type PerformanceOverviewProps = {
-  totalPoints: number;
+  points: number;
   userRanking: number;
 };
 
-function PerformanceOverview({ totalPoints, userRanking }: PerformanceOverviewProps) {
+function PerformanceOverview({ points, userRanking }: PerformanceOverviewProps) {
   const renderScore = "00000000";
 
-  const scoreLength = totalPoints.toString().length;
-  const formateScore = renderScore.slice(scoreLength) + totalPoints;
+  const scoreLength = points.toString().length;
+  const formateScore = renderScore.slice(scoreLength) + points;
   return (
     <div
       className="badge bg-[#242933] h-fit flex flex-wrap md:flex-nowrap

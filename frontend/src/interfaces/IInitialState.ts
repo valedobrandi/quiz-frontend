@@ -11,8 +11,9 @@ export interface IInitialState {
   index: number;
   answer: null | number;
   points: number;
-  highScore: number;
   seconds: number;
   username: null | string;
   nextQuestion: number;
+  sequence: number;
+  bonus: number;
 }
