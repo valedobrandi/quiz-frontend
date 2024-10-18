@@ -15,14 +15,23 @@ type QuizPropsType = {
 
 function Quiz({ setUsername, username }: QuizPropsType) {
   const [
-    { status, questions, categories, index, answer, points, highScore, seconds },
+    {
+      status,
+      questions,
+      categories,
+      index,
+      answer,
+      points,
+      highScore,
+      seconds,
+      nextQuestion,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
   const userRef = useRef("");
 
-
   useEffect(() => {
-    if (questions.length % 10 !== 0) return
+    if (questions.length % 10 !== 0) return;
     const fetchQuestions = async () => {
       try {
         const questions = await fetch("http://localhost:3001/quiz");
@@ -42,7 +51,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
       try {
         const questions = await fetch("http://localhost:3001/quiz");
         const data = await questions.json();
-        
+
         dispatch({ type: "success", payload: data });
       } catch (error) {
         console.log(error);
@@ -52,6 +61,20 @@ function Quiz({ setUsername, username }: QuizPropsType) {
     fetchQuestions();
   }, []);
 
+  useEffect(() => {
+    if (nextQuestion === 0) return;
+    
+    const timeoutId = setTimeout(() => {
+      dispatch({
+        type: "nextQuestion",
+        payload: questions[index].correct_answers,
+      });
+    }, 1000);
+
+
+    return () => clearTimeout(timeoutId); // Limpa o timeout quando o componente desmonta ou `nextQuestion` muda
+
+  }, [nextQuestion]);
 
   return (
     <div className="my-12">
@@ -98,12 +121,12 @@ function Quiz({ setUsername, username }: QuizPropsType) {
         <div className="m-6">
           <div className="mx-auto">
             <Progress
+              username={username || "player"}
               categories={categories}
               seconds={seconds}
               dispatch={dispatch}
               index={index}
               points={points}
-              questions={questions}
               totalPoints={highScore}
             />
             <div>
@@ -123,7 +146,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
               />
             </div>
           </div>
-          <div className="items-center flex w-[95%]">
+{/*           <div className="items-center flex w-[95%]">
             <div className="w-full">
               <Button
                 style="btn btn-active btn-lg btn-block md:text-lg mx-12"
@@ -136,7 +159,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
                 }}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

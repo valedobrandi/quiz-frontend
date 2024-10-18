@@ -6,7 +6,6 @@ type HeaderProps = {
 };
 
 function Header({ username }: HeaderProps) {
-  const navigate = useNavigate();
 
   const render = (isRender: boolean | string | null) => isRender;
 
@@ -27,13 +26,6 @@ function Header({ username }: HeaderProps) {
           Challenge Your self and Rise to the Top!
         </p>
       </div>
-      {render(!username) && (
-        <Button
-          style="btn btn-primary btn-sm bg-[#641ae6] font-black text-[#f1f3f5] uppercase"
-          title="enter / register"
-          setClick={() => navigate("/singIn")}
-        />
-      )}
       {render(username) && (
         <p
           className=" text-center ml-6">

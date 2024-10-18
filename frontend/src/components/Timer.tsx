@@ -8,17 +8,44 @@ type TimerPropsType = {
   seconds: number;
   categories: ICategoryPoints;
   totalPoints: number;
+  username: string;
 };
-export default function Timer({ dispatch, seconds, categories, totalPoints }: TimerPropsType) {
+export default function Timer({
+  dispatch,
+  seconds,
+  categories,
+  totalPoints,
+  username,
+}: TimerPropsType) {
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (seconds === 0) {
-      dispatch({ type: "finished", payload: null });
-      navigate("/finish", { state: { categories, totalPoints } });
-    }
+    const httpPostScore = async () => {
+      const response = await fetch("http://localhost:3001/ranking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, score: totalPoints }),
+      });
+      if (response.ok) {
+        console.log("score registered with successfully");
+      }
+    };
+
+    const handleFinish = async () => {
+      if (seconds === 0) {
+        await httpPostScore();
+        dispatch({ type: "finished", payload: null });
+        navigate("/finish", { state: { categories, totalPoints } });
+      }
+    };
+
+    handleFinish();
     const id = setInterval(() => {
       dispatch({ type: "tick", payload: null });
     }, 1000);
+
     return () => clearInterval(id);
   }, [dispatch, seconds]);
 

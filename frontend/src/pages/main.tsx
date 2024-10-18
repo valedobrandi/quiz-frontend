@@ -51,12 +51,8 @@ const Main: React.FC = () => {
                   return (
                     <StatCard
                       index={index}
-                      percentage={category.percentage}
                       key={index}
-                      description=""
-                      icon=""
                       title="PIC"
-                      unit=""
                       value={category.points}
                     />
                   );

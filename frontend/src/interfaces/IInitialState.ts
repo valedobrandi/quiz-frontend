@@ -14,4 +14,5 @@ export interface IInitialState {
   highScore: number;
   seconds: number;
   username: null | string;
+  nextQuestion: number;
 }

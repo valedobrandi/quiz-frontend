@@ -28,7 +28,10 @@ export default function Options({ answerOptions, dispatch, correctAnswer, answer
                ${!isDisabled && hoverTranslate}
                ${isDisabled && styleOption}
                ${isDisabled && applyStyleTranslate}`}
-            onClick={() => dispatch({ type: "answer", payload: index })}
+            onClick={() => {
+              dispatch({ type: "answer", payload: index });
+            
+            }}
             disabled={isDisabled}
           >
             {answerOption}

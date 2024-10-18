@@ -2,33 +2,42 @@ import { ScoreBadge } from "../components/ScoreBadge";
 
 type PerformanceOverviewProps = {
   totalPoints: number;
-}
+  userRanking: number;
+};
 
-function PerformanceOverview({totalPoints}: PerformanceOverviewProps) {
+function PerformanceOverview({ totalPoints, userRanking }: PerformanceOverviewProps) {
+  const renderScore = "00000000";
+
+  const scoreLength = totalPoints.toString().length;
+  const formateScore = renderScore.slice(scoreLength) + totalPoints;
   return (
-    <div className="badge bg-[#242933] h-fit flex flex-wrap md:flex-nowrap
-    items-center gap-4 p-4 mx-1 md:m-0 md:flex-nowrap">
-      <h2 className="w-full text-xl font-Coiny text-center text-blue-600">
-        Your Performance Overview
+    <div
+      className="badge bg-[#242933] h-fit flex flex-wrap md:flex-nowrap
+    items-center gap-4 p-4 mx-1 md:m-0 md:flex-nowrap"
+    >
+      <h2 className="w-full md:text-2xl text-sm 
+      tracking-widest font-Coiny text-center text-blue-600">
+        Performance Overview
       </h2>
-      <div className="flex flex-wrap items-center justify-around gap-8">
-        <div className="flex gap-6">
+      <div className="flex flex-wrap items-center">
+        <div className="flex gap-6 items-center">
           <ScoreBadge
-            style="badge badge-info gap-2 px-6 py-5"
+            style="badge badge-error p-7 items-center tracking-wider"
             image="ranking-crown-svgrepo-com.svg"
             title="Ranking:"
-            value={1}
+            value={userRanking}
           />
-          <ScoreBadge
-            style="badge badge-success gap-2 px-6 py-5"
-            image="profits-statistics-svgrepo-com.svg"
-            title="Points:"
-            value={totalPoints}
-          />
+          <p
+            className="
+                [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]
+                pressStart text-yellow-400 text-2xl"
+          >
+            {formateScore}
+          </p>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default PerformanceOverview;

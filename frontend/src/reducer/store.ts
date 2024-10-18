@@ -10,6 +10,7 @@ export const initialState: IInitialState = {
   highScore: 0,
   seconds: 0,
   username: null,
+  nextQuestion: 0,
 };
 
 

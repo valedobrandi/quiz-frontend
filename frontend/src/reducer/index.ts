@@ -6,27 +6,39 @@ export default function reducer(
   action: IAction
 ): IInitialState {
   switch (action.type) {
-    case "setNickname":  
-      return { ...state, username: action.payload };     
+    case "setNickname":
+      return { ...state, username: action.payload };
     case "success":
       return {
         ...state,
         questions: action.payload,
         status: "ready",
       };
-      case "refreshQuestion":     
-        return {
-          ...state,
-          questions: state.questions.concat(action.payload),
-        };
+    case "refreshQuestion":
+      return {
+        ...state,
+        questions: state.questions.concat(action.payload),
+      };
     case "fail":
       return { ...state, status: "error" };
+    case "BONUS":
+      switch (action.payload) {
+        case 1:
+          return { ...state, seconds: state.seconds + 30 };
+        case 2:
+          return { ...state, seconds: state.seconds + 60 };
+        case 3:
+          return { ...state, seconds: state.seconds + 90 };
+        case 4:
+          return { ...state, seconds: state.seconds + 120 };
+        default:
+          return { ...state };
+      }
     case "start":
-      return { ...state, status: "start", seconds: 10 * 2 };
+      return { ...state, status: "start", seconds: 60 * 2 };
     case "finished":
-
-      return { 
-        ...state,  
+      return {
+        ...state,
         questions: [],
         status: "loading",
         index: 0,
@@ -41,6 +53,7 @@ export default function reducer(
         ...state,
         answer: Number(action.payload),
         highScore: points > highScore ? points : highScore,
+        nextQuestion: state.nextQuestion + 1,
       };
     }
     case "nextQuestion": {
@@ -49,14 +62,14 @@ export default function reducer(
       if (action.payload === answer) answerPoints = 1;
       const categoryName = state.questions[state.index].category;
 
-      const getCategoryAndPoint = { 
+      const getCategoryAndPoint = {
         ...state.categories,
-        [categoryName]: (state.categories[categoryName] || 0 ) + answerPoints
+        [categoryName]: (state.categories[categoryName] || 0) + answerPoints,
       };
 
       return {
         ...state,
-        categories: {...state.categories,  ...getCategoryAndPoint},
+        categories: { ...state.categories, ...getCategoryAndPoint },
         index: state.index + 1,
         answer: null,
         points: state.points + answerPoints,

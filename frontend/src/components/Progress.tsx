@@ -1,17 +1,20 @@
-import { IAction } from "../interfaces/IAction";
-import { ICategoryPoints } from "../interfaces/IInitialState";
-import { IQuestion } from "../interfaces/IQuestions";
+import { useEffect, useState } from "react";
 import Timer from "./Timer";
 
 type ProgressPropsType = {
   index: number;
-  questions: IQuestion[];
   points: number;
-  totalPoints: number;
-  dispatch: React.Dispatch<IAction>;
+  dispatch: React.Dispatch<any>;
   seconds: number;
-  categories: ICategoryPoints;
+  categories: any;
+  totalPoints: number;
+  username: string | null;
 };
+
+interface LevelProgress {
+  backgroundColor: {[key: number]: string};
+  borderColor: {[key: number]: string};
+}
 
 export default function Progress({
   index,
@@ -19,8 +22,46 @@ export default function Progress({
   dispatch,
   seconds,
   categories,
-  totalPoints
+  totalPoints,
+  username,
 }: ProgressPropsType) {
+  const [bonus, setBonus] = useState(0);
+  const [answerSequence, setAnswerSequence] = useState(0);
+
+  useEffect(() => {
+    const points = { "prev": totalPoints + 1, "curr": totalPoints}
+
+    if (points.prev === points.curr) return setAnswerSequence(answerSequence + 1);
+    if (answerSequence === 5) return setBonus(1);
+    if (answerSequence === 5) return setAnswerSequence(0);
+    if (points.prev !== points.curr) return setAnswerSequence(0);
+
+  }, [totalPoints]);
+
+  useEffect(() => {
+
+    if (answerSequence === 5) {
+      setBonus(1)
+      dispatch({ type: "BONUS", payload: bonus });
+    } 
+
+  },[bonus])
+
+  const progressStyle: LevelProgress = {
+    backgroundColor: {
+    1: '',
+    2: 'progress-info',
+    3: 'progress-success',
+    4: 'progress-warning',
+    5: 'progress-secondary'},
+    borderColor: { 
+    1: '200 border-2',
+    2: '300 border-4',
+    3: '400 border-8',
+    4: '500 border-8',
+    }
+  };
+
   return (
     <section>
       <div className="flex item-center gap-12 m-6">
@@ -49,6 +90,7 @@ export default function Progress({
        inline-flex md:text-xl p-6"
         >
           <Timer
+            username={username || ""}
             totalPoints={totalPoints}
             dispatch={dispatch}
             seconds={seconds}
@@ -57,10 +99,12 @@ export default function Progress({
         </div>
       </div>
       <progress
-        className="progress progress-primary
-         bg-white md:h-5 h-3 w-full] mb-8 mt-4"
-        value={index + 1}
-        max={20}
+        className={`progress 
+          progress-${progressStyle.backgroundColor[answerSequence]}
+          border-yellow-${progressStyle.borderColor[answerSequence]}
+          md:h-5 h-3 w-full] mb-8`}
+        value={answerSequence}
+        max={5}
       ></progress>
     </section>
   );

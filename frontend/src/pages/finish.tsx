@@ -6,10 +6,30 @@ import CategoryLeaderboard from "../components/Leaderboard";
 import HeaderSection from "../components/HeaderSection";
 import { useLocation } from "react-router-dom";
 
-function Finish() {
+type FinishProps = {
+  username: string | null;
+};
+
+function Finish({ username }: FinishProps) {
   const [toggleView, setToggleView] = useState(true);
+  const [ranking, setRanking] = useState<{ username: string; score: number }[]>(
+    [{ username: "enter player", score: 0 }]
+  );
   const location = useLocation();
   const { categories, totalPoints } = location.state || {};
+
+  useEffect(() => {
+    const httpGetRanking = async () => {
+      const response = await fetch("http://localhost:3001/ranking");
+      const data = await response.json();
+      setRanking(data);
+      if (response.ok) {
+        console.log("ranking fetched successfully");
+      }
+    };
+    httpGetRanking();
+  }, []);
+
   useEffect(() => {
     const scrollToCenter = () => {
       if (!toggleView) {
@@ -20,10 +40,11 @@ function Finish() {
     };
     scrollToCenter();
   }, [toggleView]);
-
+  const sortRaking = ranking.sort((a, b) => b.score - a.score);
+  const getRanking = ranking.findIndex((user) => user.username === username);
   return (
     <>
-      <PerformanceOverview totalPoints={totalPoints} />
+      <PerformanceOverview totalPoints={totalPoints} userRanking={getRanking} />
       <ToggleView setToggleView={() => setToggleView(!toggleView)} />
       <section className="flex flex-col w-fit justify-center mt-10 pb-36">
         {toggleView ? (
@@ -34,12 +55,16 @@ function Finish() {
           />
         ) : (
           <HeaderSection
-            altText="trophy image"
+            altText="computer image"
             headerText="Tech Bubble"
             imageSrc="chart-graph-svgrepo-com.svg"
           />
         )}
-        {toggleView ? <Ranking /> : <CategoryLeaderboard categories={categories}/>}
+        {toggleView ? (
+          <Ranking ranking={sortRaking.slice(0, 15)} />
+        ) : (
+          <CategoryLeaderboard categories={categories} />
+        )}
       </section>
     </>
   );
