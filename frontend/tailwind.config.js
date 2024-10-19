@@ -7,7 +7,17 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        pulse: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) forwards',
+      },
+      keyframes: {
+        pulse: {
+          '0%': { transform: 'translateY(0)', opacity: 1 },
+          '100%': { transform: 'translateY(-50px)', opacity: 0 },
+        }
+      }
+    },
     fontFamily: {
       pressStart: ['Press Start 2P', 'Arial', 'sans-serif'],
       Nunito: ['Nunito', 'Arial', 'sans-serif'],

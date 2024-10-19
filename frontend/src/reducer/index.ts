@@ -74,7 +74,7 @@ export default function reducer(
         ...state.categories,
         [categoryName]: (state.categories[categoryName] || 0) + answerPoints,
       };
-
+      
       return {
         ...state,
         categories: { ...state.categories, ...getCategoryAndPoint },

@@ -1,6 +1,3 @@
-import Button from "./Button";
-import { useNavigate } from "react-router-dom";
-
 type HeaderProps = {
   username: string | null;
 };
@@ -12,7 +9,7 @@ function Header({ username }: HeaderProps) {
   return (
     <header
       className="p-4 flex flex-wrap items-center 
-      justify-start font-bold uppercase tracking-wide mb-4">
+      md:justify-start justify-center font-bold uppercase tracking-wide mb-4">
       <div
         className="flex items-center justify-center md:m-0">
         <img
@@ -28,7 +25,10 @@ function Header({ username }: HeaderProps) {
       </div>
       {render(username) && (
         <p
-          className=" text-center ml-6">
+          className="
+          [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]
+          pressStart text-[#a6adba]
+          mx-auto lg:ml-6">
           Welcome, 
           <span className="text-yellow-500"> {username}</span>
         </p>

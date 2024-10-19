@@ -29,7 +29,6 @@ export default function Progress({
   bonus
 }: ProgressPropsType) {
 
-
   useEffect(() => {
     if (sequence === 4) {
       dispatch({ type: "BONUS", payload: bonus + 1});
@@ -78,6 +77,8 @@ export default function Progress({
        inline-flex md:text-xl p-6"
         >
           <Timer
+            bonusValue={bonus}
+            timerExtendValue={30 * bonus}
             username={username}
             points={points}
             dispatch={dispatch}

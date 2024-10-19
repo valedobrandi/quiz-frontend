@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { IAction } from "../interfaces/IAction";
 import { useNavigate } from "react-router-dom";
 import { ICategoryPoints } from "../interfaces/IInitialState";
+import ExtendTimeAnimation from "./ExtendTimeAnimation";
 
 type TimerPropsType = {
   dispatch: React.Dispatch<IAction>;
@@ -9,6 +10,8 @@ type TimerPropsType = {
   categories: ICategoryPoints;
   points: number;
   username: string;
+  timerExtendValue: number;
+  bonusValue: number;
 };
 export default function Timer({
   dispatch,
@@ -16,6 +19,8 @@ export default function Timer({
   categories,
   points,
   username,
+  timerExtendValue,
+  bonusValue,
 }: TimerPropsType) {
   const navigate = useNavigate();
 
@@ -49,10 +54,17 @@ export default function Timer({
     return () => clearInterval(id);
   }, [dispatch, seconds]);
 
+  useEffect(() => {}, [bonusValue]);
+
   return (
-    <div className="text-center flex items-center">
-      <img className="h-7 mr-4" src="timer.svg" alt="statistics picture" />
-      <p className="countdown font-mono text-3xl text-red-800">{seconds}</p>
+    <div className="flex items-center">
+      <div className="text-center flex items-center">
+        <img className="h-7 mr-4" src="timer.svg" alt="statistics picture" />
+        <p className="countdown font-mono text-3xl text-red-800">{seconds}</p>
+      </div>
+      {bonusValue > 0 && (
+        <ExtendTimeAnimation timerExtendValue={timerExtendValue} />
+      )}
     </div>
   );
 }

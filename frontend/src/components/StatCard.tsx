@@ -16,7 +16,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, index }) => {
   const getBackgroundColor =
     index % 2 === 0 ? backgroundColor[0] : backgroundColor[1];
 
-  const pix =(value * 20) + 120;
+  const pix =(value * 12) + 120;
 
   const windowWidth = window.innerWidth;
   const styledSize = windowWidth < 400 ? `${pix}px` : `${pix}px`;
@@ -29,7 +29,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, index }) => {
       <span
         className="stat-title font-black uppercase 
       whitespace-normal leading-3 text-sm
-      text-center text-black"
+      text-center text-black truncate p-2 "
       >
         {/* <div className="inline text-lg mr-2 text-center">{icon}</div> */}
         {title}

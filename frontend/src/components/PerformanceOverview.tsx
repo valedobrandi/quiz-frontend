@@ -6,7 +6,7 @@ type PerformanceOverviewProps = {
 };
 
 function PerformanceOverview({ points, userRanking }: PerformanceOverviewProps) {
-  const renderScore = "00000000";
+  const renderScore = "0000";
 
   const scoreLength = points.toString().length;
   const formateScore = renderScore.slice(scoreLength) + points;
@@ -15,7 +15,7 @@ function PerformanceOverview({ points, userRanking }: PerformanceOverviewProps) 
       className="badge bg-[#242933] h-fit flex flex-wrap md:flex-nowrap
     items-center gap-4 p-4 mx-1 md:m-0 md:flex-nowrap"
     >
-      <h2 className="w-full md:text-2xl text-sm 
+      <h2 className="w-full md:text-2xl text-md 
       tracking-widest font-Coiny text-center text-blue-600">
         Performance Overview
       </h2>

@@ -10,7 +10,7 @@ import { useEffect, useReducer, useRef } from "react";
 
 type QuizPropsType = {
   setUsername: React.Dispatch<any>;
-  username: string;
+  username: string | null;
 };
 
 function Quiz({ setUsername, username }: QuizPropsType) {
@@ -32,6 +32,22 @@ function Quiz({ setUsername, username }: QuizPropsType) {
   const userRef = useRef("");
 
   useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const questions = await fetch("http://localhost:3001/quiz");
+        const data = await questions.json();
+        console.log(data);
+        
+        dispatch({ type: "success", payload: data });
+      } catch (error) {
+        console.log(error);
+        dispatch({ type: "fail", payload: null });
+      }
+    };
+    fetchQuestions();
+  }, []);
+
+  useEffect(() => {
     if (questions.length % 10 !== 0) return;
     const fetchQuestions = async () => {
       try {
@@ -47,20 +63,6 @@ function Quiz({ setUsername, username }: QuizPropsType) {
     fetchQuestions();
   }, [index]);
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const questions = await fetch("http://localhost:3001/quiz");
-        const data = await questions.json();
-        
-        dispatch({ type: "success", payload: data });
-      } catch (error) {
-        console.log(error);
-        dispatch({ type: "fail", payload: null });
-      }
-    };
-    fetchQuestions();
-  }, []);
 
   useEffect(() => {
     if (nextQuestion === 0) return;
@@ -84,7 +86,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
       {isRender(status, "ready") && (
         <div className="m-8 text-center">
           <h1 className="font-Nunito md:text-4xl text-2xl font-black m-8 text-center">
-            You have 4 minutes to answer how many question you can.
+            You have 2 minutes to answer how many question you can.
           </h1>
           <div className="flex flex-col items-center">
             {!username && (
