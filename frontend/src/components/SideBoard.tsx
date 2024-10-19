@@ -10,7 +10,7 @@ interface SideBoardProps {
 const SideBoard: React.FC<SideBoardProps> = ({title, description, buttonText,}) => {
   return (
     <div className="mb-24 md:mb-0">
-      <h1 className="md:text-5xl text-[#a6adba] text-center md:text-left font-Nunito font-extrabold p-2">
+      <h1 className="md:text-4xl text-[#a6adba] text-center md:text-left font-Nunito font-extrabold p-2">
         {title}
       </h1>
       <p className="font-extralight text-[#1faa9f] text-center md:text-left font-medium p-2 mb-4 md:mt-16 md:text-xl ">
