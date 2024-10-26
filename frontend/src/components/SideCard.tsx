@@ -18,7 +18,7 @@ function SideCard({ image, title, style, styleAbsolute }: SideCardProps) {
             </div>
           </div>
             <img
-              className="w-12 h-12 mr-2 -mb-5 animate-bounce 
+              className="w-12 h-12 animate-bounce 
               animate-infinite animate-duration-[1000ms]"
               src={image}
               alt="crown picture"

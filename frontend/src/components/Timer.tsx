@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IAction } from "../interfaces/IAction";
 import { useNavigate } from "react-router-dom";
 import { ICategoryPoints } from "../interfaces/IInitialState";
 import ExtendTimeAnimation from "./ExtendTimeAnimation";
+import { endPoints } from "../endPoints";
 
 type TimerPropsType = {
   dispatch: React.Dispatch<IAction>;
@@ -19,14 +20,14 @@ export default function Timer({
   categories,
   points,
   username,
-  timerExtendValue,
-  bonusValue,
+  bonusValue: levelup,
 }: TimerPropsType) {
+  const [showAnimation, setShowAnimation] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const httpPostScore = async () => {
-      const response = await fetch("http://localhost:3001/ranking", {
+      const response = await fetch(`${endPoints.QUIZ_BACKEND}/ranking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +55,16 @@ export default function Timer({
     return () => clearInterval(id);
   }, [dispatch, seconds]);
 
-  useEffect(() => {}, [bonusValue]);
+  useEffect(() => {
+    if (levelup > 0) {
+      setShowAnimation(true);
+      const timer = setTimeout(() => {
+        setShowAnimation(false);
+      }, 3000); // Duração da animação em milissegundos
+      return () => clearTimeout(timer);
+    }
+  }, [levelup]);
+
 
   return (
     <div className="flex items-center">
@@ -62,9 +72,7 @@ export default function Timer({
         <img className="h-7 mr-4" src="timer.svg" alt="statistics picture" />
         <p className="countdown font-mono text-3xl text-red-800">{seconds}</p>
       </div>
-      {bonusValue > 0 && (
-        <ExtendTimeAnimation timerExtendValue={timerExtendValue} />
-      )}
+      {showAnimation ? <ExtendTimeAnimation timerExtendValue={30 * levelup} /> : <p className="absolute"></p>}
     </div>
   );
 }

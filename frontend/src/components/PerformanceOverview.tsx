@@ -12,7 +12,7 @@ function PerformanceOverview({ points, userRanking }: PerformanceOverviewProps) 
   const formateScore = renderScore.slice(scoreLength) + points;
   return (
     <div
-      className="badge bg-[#242933] h-fit flex flex-wrap md:flex-nowrap
+      className="badge bg-[#242933] h-fit flex flex-wrap
     items-center gap-4 p-4 mx-1 md:m-0 md:flex-nowrap"
     >
       <h2 className="w-full md:text-2xl text-md 

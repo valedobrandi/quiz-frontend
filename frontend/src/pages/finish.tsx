@@ -5,6 +5,8 @@ import PerformanceOverview from "../components/PerformanceOverview";
 import CategoryLeaderboard from "../components/CategoryLeaderboard";
 import HeaderSection from "../components/HeaderSection";
 import { Link, useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
+import { endPoints } from "../endPoints";
 
 type FinishProps = {
   username: string | null;
@@ -20,7 +22,7 @@ function Finish({ username }: FinishProps) {
 
   useEffect(() => {
     const httpGetRanking = async () => {
-      const response = await fetch("http://localhost:3001/ranking");
+      const response = await fetch(`${endPoints.QUIZ_BACKEND}/ranking`);
       const data = await response.json();
       setRanking(data);
       if (response.ok) {
@@ -81,6 +83,7 @@ function Finish({ username }: FinishProps) {
           </div>
         )}
       </section>
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { useGoogleLogin } from "@react-oauth/google";
+import { endPoints } from "../endPoints";
 
 
 const useAuthGoogle = () => {
@@ -6,7 +7,7 @@ const useAuthGoogle = () => {
     onSuccess: (tokenResponse) => {
       console.log(tokenResponse);
 
-      fetch('http://localhost:3001/login', {
+      fetch(`${endPoints.QUIZ_BACKEND}/login`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

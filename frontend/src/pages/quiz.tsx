@@ -7,6 +7,7 @@ import isRender from "../utils/isRender";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import { useEffect, useReducer, useRef } from "react";
+import { endPoints } from "../endPoints";
 
 type QuizPropsType = {
   setUsername: React.Dispatch<any>;
@@ -31,35 +32,24 @@ function Quiz({ setUsername, username }: QuizPropsType) {
   ] = useReducer(reducer, initialState);
   const userRef = useRef("");
 
+  const fetchQuestions = async () => {
+    try {
+      const questions = await fetch(`${endPoints.QUIZ_BACKEND}/quiz`);
+      const data = await questions.json();
+      
+      dispatch({ type: "success", payload: data });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: "fail", payload: null });
+    }
+  };
+  
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const questions = await fetch("http://localhost:3001/quiz");
-        const data = await questions.json();
-        console.log(data);
-        
-        dispatch({ type: "success", payload: data });
-      } catch (error) {
-        console.log(error);
-        dispatch({ type: "fail", payload: null });
-      }
-    };
     fetchQuestions();
   }, []);
 
   useEffect(() => {
     if (questions.length % 10 !== 0) return;
-    const fetchQuestions = async () => {
-      try {
-        const questions = await fetch("http://localhost:3001/quiz");
-        const data = await questions.json();
-
-        dispatch({ type: "refreshQuestion", payload: data });
-      } catch (error) {
-        console.log(error);
-        dispatch({ type: "fail", payload: null });
-      }
-    };
     fetchQuestions();
   }, [index]);
 
@@ -135,7 +125,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
             />
             <div>
               <h4
-                className="terminal-box text-lg p-4 md:text-2xl w-full 
+                className="terminal-box p-4 md:text-2xl w-full 
               justify-start h-full text-xl mb-4 text-center"
               >
                 {questions[index].question}

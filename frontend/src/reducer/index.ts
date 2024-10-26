@@ -42,7 +42,7 @@ export default function reducer(
           time = 0;
           break
       }
-      return { ...state, seconds: state.seconds + time, sequence: 0, bonus: action.payload };
+      return { ...state, seconds: state.seconds + time, sequence: 0, bonus: state.bonus + 1 };
     case "start":
       return { ...state, status: "start", seconds: 60 * 2 };
     case "finished":
