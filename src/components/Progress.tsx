@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Timer from "./Timer";
 import { IAction } from "../interfaces/IAction";
+import { IQuestion } from "../interfaces/IQuestions";
 
 type ProgressPropsType = {
   dispatch: React.Dispatch<IAction>;
@@ -11,6 +12,7 @@ type ProgressPropsType = {
   username: string;
   sequence: number;
   bonus: number;
+  questions: IQuestion[];
 };
 
 interface LevelProgress {
@@ -26,7 +28,8 @@ export default function Progress({
   categories,
   username,
   sequence,
-  bonus
+  bonus,
+  questions
 }: ProgressPropsType) {
 
   useEffect(() => {
@@ -84,6 +87,8 @@ export default function Progress({
             dispatch={dispatch}
             seconds={seconds}
             categories={categories}
+            questions={questions}
+            index={index}
           />
         </div>
       </div>

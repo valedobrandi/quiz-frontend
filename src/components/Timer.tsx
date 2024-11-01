@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ICategoryPoints } from "../interfaces/IInitialState";
 import ExtendTimeAnimation from "./ExtendTimeAnimation";
 import { endPoints } from "../endPoints";
+import { IQuestion } from "../interfaces/IQuestions";
 
 type TimerPropsType = {
   dispatch: React.Dispatch<IAction>;
@@ -13,6 +14,8 @@ type TimerPropsType = {
   username: string;
   timerExtendValue: number;
   bonusValue: number;
+  questions: IQuestion[];
+  index: number;
 };
 export default function Timer({
   dispatch,
@@ -21,6 +24,8 @@ export default function Timer({
   points,
   username,
   bonusValue: levelup,
+  questions,
+  index
 }: TimerPropsType) {
   const [showAnimation, setShowAnimation] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +45,10 @@ export default function Timer({
     };
 
     const handleFinish = async () => {
-      if (seconds === 0) {
+      if (
+        seconds === 0 ||
+        questions.length === (index + 1)
+      ) {
         await httpPostScore();
         dispatch({ type: "finished", payload: null });
         navigate("/finish", { state: { categories, points } });

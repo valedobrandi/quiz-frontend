@@ -31,7 +31,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
     dispatch,
   ] = useReducer(reducer, initialState);
   const userRef = useRef("");
-
+  
   const fetchQuestions = async (action: string) => {
     try {
       const questions = await fetch(`${endPoints.QUIZ_BACKEND}/quiz`);
@@ -49,8 +49,9 @@ function Quiz({ setUsername, username }: QuizPropsType) {
   }, []);
 
   useEffect(() => {
-    if (questions.length % 10 !== 0) return;
-    fetchQuestions("refreshQuestion");
+    if ((questions.length - index) < 5) {
+      fetchQuestions("refreshQuestion");
+    }
   }, [index]);
 
 
@@ -121,6 +122,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
               points={points}
               sequence={sequence}
               bonus={bonus}
+              questions={questions}
             />
             <div>
               <h4
