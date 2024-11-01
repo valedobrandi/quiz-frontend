@@ -7,10 +7,10 @@ type SideCardProps = {
 
 function SideCard({ image, title, style, styleAbsolute }: SideCardProps) {
   return (
-      <div className="grid grid-cols-1 gap-1  6">
+      <div className="grid grid-cols-1 gap-1">
         <div
           className={`relative flex flex-col items-center justify-center 
-          ${style} rounded-2xl p-5 w-[50%] m-auto`}
+          ${style} rounded-2xl p-5 w-[60%] m-auto`}
         >
           <div className={styleAbsolute}>
             <div className="flex flex-row items-start justify-center space-x-2">

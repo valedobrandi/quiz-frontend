@@ -44,7 +44,7 @@ export default function reducer(
       }
       return { ...state, seconds: state.seconds + time, sequence: 0, bonus: state.bonus + 1 };
     case "start":
-      return { ...state, status: "start", seconds: 60 * 2 };
+      return { ...state, status: "start", seconds: 30 * 2 };
     case "finished":
       return {
         ...state,

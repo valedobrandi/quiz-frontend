@@ -18,8 +18,8 @@ const Main: React.FC = () => {
           <div className="w-full md:w-[30rem] group">
             <div className="grid grid-cols-1 gap-16">
               <SideCard
-                style="css-ranking-container-background-color text-center "
-                styleAbsolute="absolute -top-14  "
+                style="css-ranking-container-background-color text-center"
+                styleAbsolute="absolute -top-14 "
                 image="ranking-crown-svgrepo-com.svg"
                 title="Rank Yourself Against Other Players"
               />

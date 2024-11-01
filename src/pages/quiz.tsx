@@ -76,7 +76,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
       {isRender(status, "ready") && (
         <div className="m-8 text-center">
           <h1 className="font-Nunito md:text-4xl text-2xl font-black m-8 text-center">
-            You have 2 minutes to answer how many question you can.
+            You have 60 seconds to answer how many question you can.
           </h1>
           <div className="flex flex-col items-center">
             {!username && (

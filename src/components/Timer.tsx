@@ -75,12 +75,12 @@ export default function Timer({
 
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center badge">
       <div className="text-center flex items-center">
-        <img className="h-7 mr-4" src="timer.svg" alt="statistics picture" />
-        <p className="countdown font-mono text-3xl text-red-800">{seconds}</p>
+        <img className="h-7 mr-2 md:mr-4" src="timer.svg" alt="statistics picture" />
+        <p className="countdown font-mono md:text-3xl text-2xl text-red-800">{seconds}</p>
       </div>
-      {showAnimation ? <ExtendTimeAnimation timerExtendValue={30 * levelup} /> : <p className="absolute"></p>}
+      {showAnimation ? <ExtendTimeAnimation timerExtendValue={12 * levelup} /> : <p className="absolute"></p>}
     </div>
   );
 }
