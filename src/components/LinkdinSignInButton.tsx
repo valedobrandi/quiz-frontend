@@ -1,11 +1,11 @@
 import React from 'react';
 import Linkdin_SVG from "../assets/linkedin-color-svgrepo-com.svg"
-import { endPoints } from '../endPoints';
+import { HTTP } from '../endPoints';
 
 const LinkdinSignInButton: React.FC = () => {
     
     const authentication =  async () => {
-      const response = await fetch(`${endPoints.QUIZ_BACKEND}/auth/linkdin`)
+      const response = await fetch(`${HTTP.QUIZ_BACKEND}/auth/linkdin`)
       const data = await response.json();
       const windowFeatures = "innerWidth=400,innerHeight=700";
       window.open(data,'popup', windowFeatures)

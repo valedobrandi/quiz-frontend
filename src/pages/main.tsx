@@ -32,6 +32,7 @@ const Main: React.FC = () => {
             />
           </div>
         </section>
+
         <section className="">
           <div className="text-center md:mb-60 ">
             <h2 className="md:text-5xl font-black">

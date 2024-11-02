@@ -3,7 +3,7 @@ import { IAction } from "../interfaces/IAction";
 import { useNavigate } from "react-router-dom";
 import { ICategoryPoints } from "../interfaces/IInitialState";
 import ExtendTimeAnimation from "./ExtendTimeAnimation";
-import { endPoints } from "../endPoints";
+import { HTTP } from "../endPoints";
 import { IQuestion } from "../interfaces/IQuestions";
 
 type TimerPropsType = {
@@ -32,7 +32,7 @@ export default function Timer({
 
   useEffect(() => {
     const httpPostScore = async () => {
-      const response = await fetch(`${endPoints.QUIZ_BACKEND}/ranking`, {
+      const response = await fetch(`${HTTP.QUIZ_BACKEND}/ranking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

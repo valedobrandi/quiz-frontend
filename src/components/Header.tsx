@@ -1,9 +1,12 @@
+import useFetch from "../customHooks/useFetch";
+import { HTTP } from "../endPoints";
+
 type HeaderProps = {
   username: string | null;
 };
 
 function Header({ username }: HeaderProps) {
-
+  const { data } = useFetch(`${HTTP.QUIZ_BACKEND}/count`);
   const render = (isRender: boolean | string | null) => isRender;
 
   return (
@@ -23,16 +26,26 @@ function Header({ username }: HeaderProps) {
           Challenge Your self and Rise to the Top!
         </p>
       </div>
-      {render(username) && (
+      {render(username) ? (
         <p
           className="
           [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]
           pressStart text-[#a6adba]
           mx-auto lg:ml-6">
-          Welcome, 
+          Welcome,
           <span className="text-yellow-500"> {username}</span>
         </p>
-      )}
+      )
+        : (
+          <p
+            className="
+            [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]
+            pressStart text-[#a6adba]
+            mx-auto">
+            Players
+            <span className="text-yellow-500">{" "}{data}</span>
+          </p>
+        )}
     </header>
   );
 }

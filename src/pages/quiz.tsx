@@ -7,7 +7,7 @@ import isRender from "../utils/isRender";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import { useEffect, useReducer, useRef } from "react";
-import { endPoints } from "../endPoints";
+import { HTTP } from "../endPoints";
 
 type QuizPropsType = {
   setUsername: React.Dispatch<any>;
@@ -31,19 +31,19 @@ function Quiz({ setUsername, username }: QuizPropsType) {
     dispatch,
   ] = useReducer(reducer, initialState);
   const userRef = useRef("");
-  
+
   const fetchQuestions = async (action: string) => {
     try {
-      const questions = await fetch(`${endPoints.QUIZ_BACKEND}/quiz`);
+      const questions = await fetch(`${HTTP.QUIZ_BACKEND}/quiz`);
       const data = await questions.json();
-      
+
       dispatch({ type: action, payload: data });
     } catch (error) {
       console.log(error);
       dispatch({ type: "fail", payload: null });
     }
   };
-  
+
   useEffect(() => {
     fetchQuestions("success");
   }, []);
@@ -56,16 +56,16 @@ function Quiz({ setUsername, username }: QuizPropsType) {
 
 
   useEffect(() => {
-    if (nextQuestion === 0) return;   
+    if (nextQuestion === 0) return;
     const timeoutId = setTimeout(() => {
       dispatch({
         type: "nextQuestion",
         payload: questions[index].correct_answers,
       });
     }, 1000);
-    
 
-    return () => clearTimeout(timeoutId); 
+
+    return () => clearTimeout(timeoutId);
 
   }, [nextQuestion]);
 
@@ -87,6 +87,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
                 className="input input-bordered input-warning w-full max-w-xs m-4"
               />
             )}
+
             <Button
               style="btn btn-active btn-lg md:text-lg"
               setClick={() => (
@@ -95,6 +96,7 @@ function Quiz({ setUsername, username }: QuizPropsType) {
               )}
               title={"Start Quiz"}
             />
+
           </div>
         </div>
       )}
