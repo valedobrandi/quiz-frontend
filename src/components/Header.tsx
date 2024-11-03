@@ -42,7 +42,7 @@ function Header({ username }: HeaderProps) {
             [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]
             pressStart text-[#a6adba]
             mx-auto">
-            Players
+            Player
             <span className="text-yellow-500">{" "}{data}</span>
           </p>
         )}

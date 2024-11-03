@@ -7,9 +7,6 @@ const useFetch = (http: string) => {
   useEffect(() => {
     const fetchData = async () => {
         const response = await fetch(http);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
         const result = await response.json();
         setData(result);
     };
