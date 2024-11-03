@@ -6,7 +6,7 @@ type HeaderProps = {
 };
 
 function Header({ username }: HeaderProps) {
-  const { data } = useFetch(`${HTTP.QUIZ_BACKEND}/count`);
+  const { data } = useFetch(`${HTTP.QUIZ_BACKEND}/ranking/count`);
   const render = (isRender: boolean | string | null) => isRender;
 
   return (
